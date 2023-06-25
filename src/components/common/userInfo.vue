@@ -19,14 +19,16 @@ export default{
     setup(){
         const state = reactive({
             carouselConfig:{
-                autoplay:false,
+                autoplay:true,
                 indicatorPosition:'none'
             },
             avatarArr:[
-                {id:1,src:"http://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/avatar1.jpg"},
-                {id:2,src:"http://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/avatar2.jpg"},
-                {id:3,src:"http://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/avatar3.jpg"},
-                {id:4,src:"http://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/avatar4.jpg"},
+                {id:1,src:'http://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/ai1.jpg'},
+                {id:2,src:'http://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/ai2.jfif'},
+                {id:3,src:"http://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/avatar1.jpg"},
+                // {id:4,src:"http://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/avatar2.jpg"},
+                {id:5,src:"http://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/avatar3.jpg"},
+                // {id:6,src:"http://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/avatar4.jpg"},
             ]
         })
         return {state}
