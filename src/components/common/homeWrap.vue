@@ -16,8 +16,7 @@ export default {
     },
     setup(){
         const state = reactive({
-            introduce:`高梓原</br>出生于1993年10月28日,汉族</br>2016年毕业于华北水利水电大学</br>2018年开始从事前端开发,目前就职上海。</br>
-            一个典型的矛盾综合体</br>即浪漫又现实,即狂妄又谦虚,即疯狂又冷静。</br>`,
+            introduce:`高梓原</br>出生于1993年10月28日,汉族</br>2016年毕业于华北水利水电大学</br>2018年开始从事前端开发,目前就职上海。</br>`,
             introduceCopy:'',
             timer:null
         })
