@@ -1,6 +1,8 @@
 {
   "name": "small-note",
   "version": "0.0.0",
+  "description": "It is my dailylife.",
+  "author": "<ziyuan_gao@163.com>",
   "private": true,
   "scripts": {
     "dev": "vite",

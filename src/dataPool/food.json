@@ -1,5 +1,41 @@
 [
   {
+    "date": "2023/07/04",
+    "breakfast": "包子*2",
+    "lunch": "辣椒炒鸡蛋盖饭",
+    "dinner": ""
+  },
+  {
+    "date": "2023/07/03",
+    "breakfast": "包子*2",
+    "lunch": "包菜盖饭",
+    "dinner": "泡面+包菜"
+  },
+  {
+    "date": "2023/06/29",
+    "breakfast": "包子*2",
+    "lunch": "盒饭",
+    "dinner": "酱饼"
+  },
+  {
+    "date": "2023/06/28",
+    "breakfast": "手抓饼",
+    "lunch": "可乐+雪梅娘*2",
+    "dinner": "炒面"
+  },
+  {
+    "date": "2023/06/27",
+    "breakfast": "手抓饼",
+    "lunch": "小碗冒菜米饭",
+    "dinner": "泡面+米饭"
+  },
+  {
+    "date": "2023/06/26",
+    "breakfast": "包子*2",
+    "lunch": "冒菜米饭",
+    "dinner": "半只烤鸭"
+  },
+  {
     "date": "2023/06/25",
     "breakfast": "包子*2",
     "lunch": "番茄鸡蛋盖饭",
