@@ -1,0 +1,1 @@
+import{_ as e,o,c as _}from"./index-bc0bf080.js";const t={setup(){}};function c(n,r,a,s,i,p){return o(),_("div",null,"miniProgaram")}const d=e(t,[["render",c],["__scopeId","data-v-26374cbb"]]);export{d as default};

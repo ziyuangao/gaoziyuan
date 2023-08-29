@@ -1,9 +1,57 @@
 [
   {
+    "date": "2023/08/29",
+    "breakfast": "包子*2+脆骨肠",
+    "lunch": "炒面",
+    "dinner": "饺子"
+  },
+  {
+    "date": "2023/08/28",
+    "breakfast": "手抓饼",
+    "lunch": "凉皮+酸梅汤",
+    "dinner": "凉菜"
+  },
+  {
+    "date": "2023/08/25",
+    "breakfast": "包子+烤肠",
+    "lunch": "盒饭",
+    "dinner": "大排饭"
+  },
+  {
+    "date": "2023/08/24",
+    "breakfast": "包子+茶叶蛋",
+    "lunch": "炒面",
+    "dinner": "鱼香茄子盖饭"
+  },
+  {
+    "date": "2023/08/23",
+    "breakfast": "手抓饼",
+    "lunch": "炒米饭",
+    "dinner": "烩面+拌面"
+  },
+  {
+    "date": "2023/08/22",
+    "breakfast": "",
+    "lunch": "土豆片盖饭",
+    "dinner": "手抓饼+大鸡腿"
+  },
+  {
+    "date": "2023/08/21",
+    "breakfast": "包子",
+    "lunch": "忘了",
+    "dinner": "热干面+可乐"
+  },
+  {
+    "date": "2023/08/18",
+    "breakfast": "",
+    "lunch": "汉堡，琵琶腿，香肠*2",
+    "dinner": "炸鸡"
+  },
+  {
     "date": "2023/08/17",
     "breakfast": "手抓饼",
     "lunch": "香菇猪肉饺子",
-    "dinner": ""
+    "dinner": "黄焖鸡米饭"
   },
   {
     "date": "2023/08/16",
