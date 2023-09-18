@@ -15,6 +15,6 @@ export default {
   name: 'HomePage',
   components: {
     bannerTemplate,menuList,homeWrap
-  }
+  },
 }
 </script>
