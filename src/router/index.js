@@ -26,6 +26,7 @@ const router = createRouter({
         {path:'/notes/miniProgram',component:()=>import('../components/notesTemplate/miniProgram.vue')},
         {path:'/notes/food',component:()=>import('../components/notesTemplate/foodNote.vue')},
         {path:'/notes/music',component:()=>import('../components/notesTemplate/music.vue')},
+        {path:'/notes/test',component:()=>import('../components/notesTemplate/test.vue')},
       ],
     },
     {

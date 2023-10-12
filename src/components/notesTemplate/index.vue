@@ -41,6 +41,7 @@ export default {
         {id: 3,title: "Vue",disabled: false,path:'/notes/vue',index:'3'},
         {id: 4,title: "小程序相关",disabled: true,path:'/notes/miniProgram',index:'4'},
         {id: 4,title: "流水账",disabled: false,path:'/notes/food',index:'5'},
+        {id: 4,title: "练手",disabled: false,path:'/notes/test',index:'6'},
       ],
     });
     const menuItemClick = (item)=>{
