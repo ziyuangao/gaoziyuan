@@ -2,9 +2,9 @@
   <div>
     <div class="menuList">
       <el-button
-        type="text"
         v-for="(item, index) in state.menuList"
         :key="index"
+        plain
         :disabled="item.disabled"
         @click="switchRouter(item)"
       >{{ item.menuName }}</el-button>
@@ -52,6 +52,7 @@ export default {
   font-size: 16px;
   color: #f5f5f5;
   font-weight: bold;
+  background: none;
 }
 .menuList .el-button:hover {
   color: #606266;
