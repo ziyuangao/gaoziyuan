@@ -22,6 +22,7 @@ export default {
 }
 </script>
 
+
 <style scoped>
 .pcBanner{
     width: 100%;

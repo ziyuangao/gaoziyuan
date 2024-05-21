@@ -6,6 +6,13 @@
 
 <script>
 export default {
+  data(){
+    return {
+      model:[]
+    }
+  },
+  mounted(){
+  }
 }
 </script>
 
