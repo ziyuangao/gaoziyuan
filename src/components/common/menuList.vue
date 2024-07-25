@@ -5,6 +5,7 @@
         v-for="(item, index) in state.menuList"
         :key="index"
         plain
+        text
         :disabled="item.disabled"
         @click="switchRouter(item)"
       >{{ item.menuName }}</el-button>
