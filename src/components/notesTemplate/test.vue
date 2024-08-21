@@ -1,42 +1,45 @@
 <template>
     <div class="test">
-        <p>css实现故障风格图片</p>
-        <div class="fault_img">
-            <div class="fault_img_child"></div>
+        <p>跑马灯效果</p>
+        <div class="colorful">
+            <span class="colorful">C</span>
+            <span class="colorful">O</span>
+            <span class="colorful">L</span>
+            <span class="colorful">O</span>
+            <span class="colorful">R</span>
+            <span class="colorful">F</span>
+            <span class="colorful">U</span>
+            <span class="colorful">L</span>
         </div>
     </div>
 </template>
 
-<script setup>
 
-</script>
-
-<style scoped>
-.test{
+<style scoped lang="scss">
+.test {
     color: #fff;
+    .colorful{
+        font-size: 24px;
+        font-weight: bold;
+        color: #FFFFFF;
+        display: inline-block;
+        padding: 8px 12px;
+        animation: colorChange 1s infinite alternate;
+    }
 }
-.fault_img{
-    position: relative;
-    width: 203px;
-    height: 152px;
-    background: url('../../assets/test_gif.gif') no-repeat #0ff;
-    background-blend-mode: lighten;
-    background-size: contain;
-}
-.fault_img_child{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: url('../../assets/test_gif.gif') no-repeat #f40;
-    background-blend-mode: lighten;
-    mix-blend-mode: darken;
-    background-size: cover;
-    margin-left: 6px;
-    animation:  shaken 30ms infinite;
-}
-@keyframes shaken{
-    50%{
+@keyframes shaken {
+    50% {
         transform: translateX(3px);
+    }
+}
+@keyframes colorChange {
+    to{
+        color: #ff0266;
+    }
+}
+@for $i from 1 through 10 {
+    .colorful:nth-child(#{$i}){
+        animation-delay: $i * 0.1s;
     }
 }
 </style>
