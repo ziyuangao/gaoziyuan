@@ -1,7 +1,5 @@
 <template>
     <div class="homeWrap">
-        <!-- <div>part1 </div> -->
-        <!-- <div>part2 </div> -->
         <div class="content">
             <user-info />
             <div class="printer">
@@ -11,11 +9,15 @@
                 <div>距离今天已经<span id="targetId"></span>天</div>
             </div>
         </div>
-        <div id="chinaMap"></div>
-
-        <!-- <div>part4 技术栈饼状图</div> -->
-        <!-- <div>part5 </div> -->
-        <div>part6 electron +vue 无聊的计算器下载</div>
+        <div class="flex-box">
+            <div id="chinaMap"></div>
+            <div id="skills"></div>
+        </div>
+        <div class="flex-box">搞点小玩意</div>
+        <div class="flex-box toys">
+            <el-button v-for="(item) in state.btnArr" :key="item.id" @click="navigatorTo(item.path)">{{ item.text }}</el-button>
+        </div>
+        <!-- <div>part6 electron +vue 无聊的计算器下载</div> -->
     </div>
 </template>
 
@@ -26,14 +28,20 @@ import { CountUp } from "countup.js";
 import * as echarts from 'echarts';
 import chinaJson from "@/dataPool/china.json";
 echarts.registerMap('china',chinaJson);
+import { useRouter } from 'vue-router';
 export default {
     components:{
         userInfo,
     },
     setup(){
+        const route = useRouter();
         const state = reactive({
             days:undefined,
-            timer:null
+            timer:null,
+            btnArr:[
+                { id:1,text:"抛硬币",path:"/YesOrNo"},
+                { id:2,text:"星空背景",path:"/starrySky"},
+            ]
         })
         const computedDays = ()=>{
             // 开始时间 时间戳 - 结束日期 时间戳 / 1000 / 60 / 24 
@@ -44,6 +52,9 @@ export default {
         }
         const setCharts = ()=>{
             const myName = echarts.init(document.getElementById('myName'));
+            if(!myName){
+                return
+            }
             myName.setOption({
                 graphic: {
                     elements: [
@@ -95,9 +106,12 @@ export default {
         }
         const setCharts1 = ()=>{
             const chinaMap = echarts.init(document.getElementById('chinaMap'));
+            if(!chinaMap){
+                return
+            }
             chinaMap.setOption({
                 title:{
-                    text:"历史工作城市",
+                    text:"工作经验",
                     left:"center",
                     textStyle:{
                         color:"#606266",
@@ -159,7 +173,7 @@ export default {
                         },
                         {
                             name: "上海",
-                            value: 1,
+                            value: 2,
                         },
                         {
                             name: "陕西",
@@ -170,19 +184,48 @@ export default {
                 ]
             })
         }
-        // const printer = ()=>{
-            
-        //     state.timer = setInterval(()=>{
-        //         if(state.introduceCopy.length - 1 >=  state.introduce.length){
-        //             clearInterval(state.timer);
-        //             state.timer = null;
-        //             state.introduceCopy = state.introduce;
-        //         }else{
-        //             state.introduceCopy = state.introduce.substring(0,state.introduceCopy.length)+'_'
-        //         }
-        //     },100)
-        // }
-        
+        const setCharts2 = ()=>{
+            const skillsChart = echarts.init(document.getElementById('skills'));
+            if(!skillsChart){
+                return
+            }
+            skillsChart.setOption({
+                title: {
+                    text: '使用技能',
+                    subtext:'skills',
+                    left: 'center'
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left'
+                },
+                series: [
+                    {
+                    name: 'Skill From',
+                    type: 'pie',
+                    radius: '50%',
+                    data: [
+                        { value: 50, name: 'Vue2' },
+                        { value: 25, name: 'Vue3' },
+                        { value: 10, name: 'jQuery' },
+                        { value: 14, name: 'uniapp' },
+                        { value: 18, name: 'wxml' },
+                        { value: 8, name: 'react' }
+                    ],
+                    emphasis: {
+                        itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                    }
+                ]
+            })
+        }
         onMounted(()=>{
             // printer()
             state.days = computedDays();//计算2018年9月23日距离今天一共多少天
@@ -194,8 +237,12 @@ export default {
             }
             setCharts();
             setCharts1();
+            setCharts2();
         })
-        return {state}
+        const navigatorTo = (path)=>{
+            route.push({ path })
+        }
+        return {state,navigatorTo}
     }
 }
 </script>
@@ -240,7 +287,20 @@ export default {
 }
 #chinaMap{
     height: 100vh;
-    width: 100%;
+    width: 70%;
     margin-top: 10px;
+}
+#skills{
+    width: 30%;
+    height: 400px;
+}
+.flex-box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.toys{
+    width: 50%;
+    margin: 0 auto;
 }
 </style>

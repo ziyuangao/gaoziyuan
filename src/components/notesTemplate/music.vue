@@ -17,7 +17,7 @@
       </el-col>
     </el-row>
     <el-table :data="state.tableConfig.data" :laoding="state.loading" size="small" class="page-table">
-      <el-table-column prop="id" label="Index" width="80" align="center" />
+      <el-table-column type="index" label="Index" width="80" align="center" />
       <el-table-column prop="name" label="Name" />
       <el-table-column prop="type" label="type" width="120" align="center" />
       <el-table-column label="操作" width="120px">
@@ -27,13 +27,13 @@
       </el-table-column>
     </el-table>
     <el-pagination v-model:currentPage="state.tableConfig.currentPage" layout="prev, pager, next"
-      :total="state.tableConfig.total" @current-change="handleCurrentChange" />
+      :total="state.totalData.length" @current-change="handleCurrentChange" />
   </div>
 </template>
 
 <script>
 import { onMounted, reactive } from 'vue';
-const dataPool = require('../../dataPool/music.json');
+import dataPool from '../../dataPool/music.json';
 export default {
   setup() {
     const state = reactive({
@@ -54,7 +54,6 @@ export default {
       tableConfig: {
         data: [],//展示的数据
         currentPage: 1,
-        total: null,
       }
     })
     const handleCurrentChange = (val) => {
@@ -67,16 +66,15 @@ export default {
         // 整理数据池
         state.totalData = dataPool.filter((item, index) => {
           // 模糊查询 and 类型搜索
-          if (item.name.includes(state.searchConfig.name)) {
+          if(!state.searchConfig.type && !state.searchConfig.name){
+            return item
+          }
+          if (item.name.includes(state.searchConfig.name) && item.type == state.searchConfig.type) {
             item.id = `${index+1}`;
-            if (state.searchConfig.type && item.type == state.searchConfig.type) {
-              return item;
-            }
             return item;
           }
         })
         state.tableConfig.data = state.totalData.slice((state.tableConfig.currentPage - 1) * 10, state.tableConfig.currentPage * 10);
-        state.tableConfig.total = state.totalData.length;
         state.loading = false;
       }, 200);
     }

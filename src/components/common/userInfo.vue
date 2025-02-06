@@ -27,8 +27,8 @@ export default{
                 {id:2,src:'https://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/ai2.jfif'},
                 {id:3,src:"https://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/avatar1.jpg"},
                 {id:4,src:"https://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/avatar2.jpg"},
-                // {id:5,src:"http://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/avatar3.jpg"},
-                // {id:6,src:"http://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/avatar4.jpg"},
+                // {id:5,src:"http://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/avatar5.jpg"},
+                {id:6,src:"http://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/avatar6.jpg"},
             ]
         })
         return {state}
