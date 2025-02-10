@@ -41,6 +41,7 @@ export default {
             btnArr:[
                 { id:1,text:"抛硬币",path:"/YesOrNo"},
                 { id:2,text:"星空背景",path:"/starrySky"},
+                { id:3,text:"转动地球",path:"/Earth"},
             ]
         })
         const computedDays = ()=>{

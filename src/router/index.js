@@ -59,6 +59,11 @@ const router = createRouter({
       name: 'YesOrNo',
       component: () => import('../views/YesOrNo.vue')
     },
+    {
+      path: '/Earth',
+      name: 'Earth',
+      component: () => import('../views/Earth.vue')
+    },
   ]
 })
 
