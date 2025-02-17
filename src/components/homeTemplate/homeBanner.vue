@@ -1,23 +1,23 @@
 <template>
     <div class="banner">
-        <div class="pcBanner" >
+        <div class="pcBanner">
             <div class="bannerText">
-                <p v-text="state.bannerTitleZh" ></p>
-                <p v-text="state.bannerTitleEn" ></p>
+                <p>{{ state.bannerTitleZh }}</p>
+                <p>{{ state.bannerTitleEn }}</p>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { reactive } from 'vue';
 export default {
     setup(){
         const state = reactive({
             bannerTitleZh:'故事要美必须藏着真话',
             bannerTitleEn:'If a story wants to be beautiful, it must hide this truth.'
         })
-        return {state}
+        return { state }
     }
 }
 </script>
@@ -39,7 +39,6 @@ export default {
     font-size: 24px;
     line-height: 30px;
     letter-spacing: 5px;
-    /* cursor: pointer; */
 }
 .pcBanner .bannerText p:nth-of-type(2){
     font-size: 18px;

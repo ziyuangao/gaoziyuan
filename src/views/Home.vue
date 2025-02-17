@@ -8,7 +8,7 @@
 
 <script>
 
-// import bannerTemplate from '@/components/homeTemplate/banner.vue'
+// import bannerTemplate from '@/components/homeTemplate/homeBanner.vue'
 // import menuList from '@/components/common/menuList.vue'
 import homeWrap from '@/components/common/homeWrap.vue'
 export default {
