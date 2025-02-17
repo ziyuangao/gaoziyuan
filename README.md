@@ -1,14 +1,12 @@
 # small-note
 
-This template should help get you started developing with Vue 3 in Vite.
+弄个小项目练练手
 
-## Recommended IDE Setup
+vue3+vite 也算是学到不少工程化知识
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+这个项目开始用ai来辅助编程了算是点进步
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+因为是纯前端项目，所以就不搞环境配置了
 
 ## Project Setup
 
