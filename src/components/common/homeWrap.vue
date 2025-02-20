@@ -13,10 +13,6 @@
             <div id="chinaMap"></div>
             <div id="skills"></div>
         </div>
-        <div class="flex-box">搞点小玩意</div>
-        <div class="flex-box toys">
-            <el-button v-for="(item) in state.btnArr" :key="item.id" @click="navigatorTo(item.path)">{{ item.text }}</el-button>
-        </div>
         <!-- <div>part6 electron +vue 无聊的计算器下载</div> -->
     </div>
 </template>
@@ -28,13 +24,11 @@ import { CountUp } from "countup.js";
 import * as echarts from 'echarts';
 import chinaJson from "@/dataPool/china.json";
 echarts.registerMap('china',chinaJson);
-import { useRouter } from 'vue-router';
 export default {
     components:{
         userInfo,
     },
     setup(){
-        const route = useRouter();
         const state = reactive({
             days:undefined,
             timer:null,
@@ -240,10 +234,7 @@ export default {
             setCharts1();
             setCharts2();
         })
-        const navigatorTo = (path)=>{
-            route.push({ path })
-        }
-        return {state,navigatorTo}
+        return {state}
     }
 }
 </script>
