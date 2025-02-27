@@ -28,7 +28,7 @@
                 <h3 class="footer-heading">小玩具</h3>
                 <ul class="footer-list">
                     <li v-for="item in toys" :key="item">
-                        <el-button type="text" size="medium" @click="navigatorTo(item.path)" >{{ item.text }}</el-button>
+                        <el-button @click="navigatorTo(item.path)" >{{ item.text }}</el-button>
                     </li>
                 </ul>
             </div>

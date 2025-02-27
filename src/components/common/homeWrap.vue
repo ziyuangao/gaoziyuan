@@ -108,12 +108,10 @@ export default {
                 title:{
                     text:"工作经验",
                     left:"center",
-                    textStyle:{
-                        color:"#606266",
-                        fontSize:24,
-                        lineHeight:36,
-                        fontWeight:"bold"
-                    },
+                    color:"#606266",
+                    fontSize:24,
+                    lineHeight:36,
+                    fontWeight:"bold"
                 },
                 tooltip: {}, // 鼠标移到图里面的浮动提示框
                 dataRange: {
@@ -129,28 +127,22 @@ export default {
                     roam: true,
                     map:'china',
                     label: {
-                        normal: {
-                            show: true, // 是否显示对应地名
-                            textStyle: {
-                                color: "#303133",
-                            },
-                        },
+                        show: true, // 是否显示对应地名
+                        color: "#303133",
                     },
                     itemStyle: {
-                        normal: {
-                            borderColor: "#E4E7ED",
-                            borderWidth: "2",
-                            areaColor: "rgba(64,158,255,0.3)",
-                        },
-                        emphasis: {
-                            areaColor: "rgba(64,158,255,1)",
-                            shadowOffsetX: 0,
-                            shadowOffsetY: 0,
-                            shadowBlur: 20,
-                            borderWidth: 0,
-                            shadowColor: "#409EFF",
-                        },
+                        borderColor: "#E4E7ED",
+                        borderWidth: "2",
+                        areaColor: "rgba(64,158,255,0.3)",
                     },
+                    emphasis:{
+                        areaColor: "rgba(64,158,255,1)",
+                        shadowOffsetX: 0,
+                        shadowOffsetY: 0,
+                        shadowBlur: 20,
+                        borderWidth: 0,
+                        shadowColor: "#409EFF",
+                    }
                 },
                 series:[
                     {
