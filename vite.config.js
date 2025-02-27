@@ -7,7 +7,6 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 // https://vitejs.dev/config/
 export default defineConfig({
   base:'./',
-  outputDir:'/docs',
   plugins: [vue(), vueJsx()],
   resolve: {
     alias: {
@@ -18,6 +17,7 @@ export default defineConfig({
     assetsInlineLimit:0,//设置静态资源本文件大小，超过此值，会转为base64编码，减少请求数量
     rollupOptions:{
       output:{//配置输出文件
+        dir:'docs',
         entryFileNames:"js/[name]-[hash].js",//入口文件配置
         chunkFileNames:"js/[name]-[hash].js",//分包文件配置
         assetFileNames(assetInfo){// css 和图片资源文件配置
