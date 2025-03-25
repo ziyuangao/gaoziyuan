@@ -6,7 +6,7 @@
     </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @function random-pastel() {
   $hue: random(360);
   @return hsl($hue, 70%, 85%);

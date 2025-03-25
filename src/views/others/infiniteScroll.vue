@@ -1,126 +1,58 @@
 <template>
-    <div :class="[{'scroll_down':scrollStatus < 0,'scroll_up':scrollStatus > 0},'demo_content']" >
-        <div class="first_one demo_item">
-            <img :src="imgConfig.imgList[imgConfig.first].src" alt=""  />
+    <div class="story">
+        <div class="title">One-Way Data Flow</div>
+        <div class="content">
+            All props form a one-way-down binding between the child property and the parent one: when the parent
+            property updates,<span class="hightlight">it will flow down to the child, but not the other way
+                around.</span> This prevents child
+            components from accidentally mutating the parent's state, which can make your app's data flow harder to
+            understand.
+
+            In addition, every time the parent component is updated, all props in the child component will be refreshed
+            with the latest value. This means you should not attempt to mutate a prop inside a child component.
         </div>
-        <div  class="second_one demo_item">
-            <img :src="imgConfig.imgList[imgConfig.second].src" alt="" />
-        </div>
-        <div class="last_one demo_item">
-            <img :src="imgConfig.imgList[imgConfig.last].src" alt=""  />
-        </div>
+        <div class="title">Mutating Object / Array Props</div>
+        <div class="content">When objects and arrays are passed as props, while the child component cannot mutate the
+            prop binding, it will be able to mutate the object or array's nested properties. This is because in
+            JavaScript objects and arrays are passed by reference, and it is unreasonably expensive for Vue to prevent
+            such mutations.
+
+            The main drawback of such mutations is that it allows the child component to affect parent state in a way
+            that isn't obvious to the parent component, potentially making it more difficult to reason about the data
+            flow in the future.<span class="hightlight2">As a best practice, you should avoid such mutations unless the parent and child are
+            tightly coupled by design.</span> In most cases, the child should emit an event to let the parent perform the
+            mutation.</div>
     </div>
 </template>
 
-<script>
-import { reactive,onMounted,ref,computed } from 'vue';
-export default {
-    setup(){
-        let scrollStatus = ref(0);
-        let isScrolling = ref(false);
-        const imgConfig = reactive({
-            second:0,
-            first:computed(()=>{
-                return imgConfig.second - 1 <  0 ? imgConfig.imgList.length  - 1 : imgConfig.second - 1
-            }),
-            last:computed(()=>{
-                return imgConfig.second + 1 > imgConfig.imgList.length - 1 ? 0 : imgConfig.second + 1
-            }),
-            imgList:[
-                {id:'1',src:"https://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/BanffEvergreens_EN-AU12780032283_1920x1080.jpg"},
-                {id:'2',src:"https://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/BrazilianPine_EN-AU10074166204_1920x1080.jpg"},
-                {id:'3',src:"https://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/CommonPipistrelle_EN-AU7421359791_1920x1080.jpg"},
-                {id:'4',src:"https://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/Dongjiang_ZH-CN10434068279_1920x1080.jpg"},
-                {id:'5',src:"https://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/DulangIsland_ZH-CN7669462147_1920x1080.jpg"}
-            ]
-        })
-        // 监听开始滚动
-        const linsterWheel = (e) =>{
-            if(isScrolling.value) return 
-            if(!e.deltaY) return //如果不存在滚动值 如果正在滚动 结束函数
-            scrollStatus.value = e.deltaY;//记录滚动值
-            isScrolling.value = true;
-            if(scrollStatus.value > 0){//向下混动
-                // 确认当前图片下标
-                imgConfig.second = imgConfig.second + 1 > imgConfig.imgList.length - 1 ? 0 : imgConfig.second + 1
-            }else{//向上滚动
-                imgConfig.second = imgConfig.second - 1 <  0 ? imgConfig.imgList.length - 1 : imgConfig.second - 1
-                // 确认当前图片下标
-            }
-        }
-        // 监听动画结束
-        const transitionEnd = ()=>{
-            isScrolling.value = false;
-            scrollStatus.value = 0;
-        }
-        onMounted(()=>{
-            window.addEventListener('wheel',linsterWheel);
-            document.querySelector('.demo_content').addEventListener('transitionend',transitionEnd);
-        })
-        return {imgConfig,scrollStatus,isScrolling}
+<style lang="scss" scoped>
+.story {
+    max-width: 800px;
+    margin: 0 auto;
+    letter-spacing: 1px;
+    line-height: 36px;
+    .title {
+        margin-top: 20px;
+        font-size: 48px;
+        font-weight: bold;
     }
-}
-</script>
-<style scoped>
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-.demo_content{
-    width: 100%;
-    height: 100vh;
-    position: relative;
-    /* 三张图片是重叠在一起的 */
-    overflow: hidden;
-}
-.demo_item{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    transition: 1s ease-in-out;
-}
-.demo_item img{
-    position: absolute;
-    width: 100%;
-    height: 100vh;
-    /* 图片覆盖整个页面 */
-    object-fit: cover;
-    transition: 1s ease-in-out;
-}
-/* 第一个图和最后一个图一定是覆盖当前图片的 */
-.first_one,.last_one{
-    z-index: 1;
-    height: 0;
-}
-.last_one{
-    bottom: 0;
-}
-/* 图片是固定在底边的 上拉时效果合理 */
-.last_one img{
-    bottom: 0;
-    transform: translateY(10%);
-}
-.last_first img{
-    transform: translateY(-10%);
-}
-.scroll_up .first_one{
-    height: 100%;
-}
-.scroll_down .last_one{
-    height: 100%;
-}
-.scroll_down .second_one img{
-    transform: translateY(-10%);
-}
-.scroll_down .last_one img{
-    transform: translateY(0%);
-}
-.scroll_up .first_one img{
-    transform: translateY(0%);
-}
-.scroll_up .second_one img{
-    transform: translateY(10%);
+    .content {
+        margin-top: 10px;
+        font-size: 24px;
+    }
+    .hightlight {
+        padding: 4px 10px;
+        background-color: rgba(27,27,238,.4);
+        border: 1px solid #000000;
+        border-radius: 6px;
+    }
+    .hightlight2 {
+        padding: 4px 10px;
+        background-color: rgba(27,27,238,.4);
+        border: 1px solid #000000;
+        border-radius: 6px;
+        box-decoration-break: clone;
+        -webkit-box-decoration-break: clone;
+    }
 }
 </style>

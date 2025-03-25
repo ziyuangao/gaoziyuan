@@ -25,7 +25,7 @@ export default {
         新路由不是页面A，我当时惊掉大牙，下楼抽了两只烟都没想明白为啥要到新页面去。找到问题了就好处理了，新页面没有表单控制的逻辑，加上之后正常跑，可是，这么写对么？`
       },
       {
-        id: 2, title:'模拟丝滑的无限翻页效果',path:"/infiniteScroll",html:`利用鼠标滑轮事件修改外层盒子样式，同时内部判断需要展示哪一张图，图片改变position属性模拟丝滑滚动.注：存在bug,二次滚动问题`
+        id: 2, title:'行盒截断',path:"/infiniteScroll",html:`英文文字换行时保证以单词为界线换行，提升样式美感`
       },
       {
         id: 3, title:'星空背景效果',path:"/starrySky",html:`使用SASS，通过设置box-shadow来实现小星星效果`
