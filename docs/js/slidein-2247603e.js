@@ -1,1 +1,0 @@
-import{_ as n}from"./index-9b2d2271.js";import{bi as a,T as s,U as t,I as r,ar as c,a0 as o,V as _,a3 as l,a4 as d}from"./vendor-09eb5a69.js";const m={},v={class:"slidein"};function f(p,u){const i=a("myslide-in");return s(),t("div",v,[(s(),t(r,null,c(20,e=>o(_("div",{class:"slidein-content",key:e},[l(d(e),1)]),[[i]])),64))])}const g=n(m,[["render",f]]);export{g as default};

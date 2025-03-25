@@ -1,8 +1,9 @@
 <template>
   <div>
     <el-collapse v-model="activeName" accordion class="collapse-content" >
-      <el-collapse-item v-for="item in list" :key="item.id" :title="item.title" :name="item.name">
+      <el-collapse-item v-for="item in list" :key="item.id" :title="item.title" :name="item.id">
         <div v-html="item.html"></div>
+        <RouterLink v-if="item.path" :to="item.path" >体验一下</RouterLink>
       </el-collapse-item>
     </el-collapse>
   </div>
@@ -11,11 +12,12 @@
 <script>
 import { reactive } from 'vue';
 import { ref } from 'vue';
+import { RouterLink } from 'vue-router';
 export default {
   setup() {
     const list = reactive([
       {
-        id: 1, title: '说一个调试bug时遇到的一个离谱问题', name: 'a1', html: `测试提出一个bug，页面A下一页跳到页面B后，返回上一页，某些原本存在的控制逻辑失效了，
+        id: 1, title: '说一个调试bug时遇到的一个离谱问题', path: '', html: `测试提出一个bug，页面A下一页跳到页面B后，返回上一页，某些原本存在的控制逻辑失效了，
         我拿到这个bug反馈后，寻思这不就是初始化可能没控制到，导致原本的代码没走么，找一找页面A初始化逻辑应该就可以了。</br>当我去找页面A代码时，明确找到初始化控制表单
         展示的部分，业务写的很详细，注释什么的都有，代码很长，初始化生效了，没有问题，可是为什么从下一页到上一页会出问题呢？我就继续找原因，会不会是返回的时候字段或者传参有问题，
         我就去查一下两个页面之间传参是不是一致，控制台打印数据，emmm也正常，没有问题，这就头大了，这数据都没问题，到底是出在哪，最笨的办法，从上一页按钮开始，不断打印数据，
@@ -23,16 +25,13 @@ export default {
         新路由不是页面A，我当时惊掉大牙，下楼抽了两只烟都没想明白为啥要到新页面去。找到问题了就好处理了，新页面没有表单控制的逻辑，加上之后正常跑，可是，这么写对么？`
       },
       {
-        id: 2, title:'模拟丝滑的无限翻页效果',html:`<a href='/infiniteScroll' style='border-radius: 3px;font-size: 12px;display: inline-block;padding: 5px 8px;color: #fff;
-        background: #409EFF;text-decoration: none;'>体验一下</a></br>利用鼠标滑轮事件修改外层盒子样式，同时内部判断需要展示哪一张图，图片改变position属性模拟丝滑滚动.注：存在bug,二次滚动问题`
+        id: 2, title:'模拟丝滑的无限翻页效果',path:"/infiniteScroll",html:`利用鼠标滑轮事件修改外层盒子样式，同时内部判断需要展示哪一张图，图片改变position属性模拟丝滑滚动.注：存在bug,二次滚动问题`
       },
       {
-        id: 3, title:'星空背景效果',html:`<a href='/starrySky' style='border-radius: 3px;font-size: 12px;display: inline-block;padding: 5px 8px;color: #fff;
-        background: #409EFF;text-decoration: none;'>体验一下</a></br>使用SASS，通过设置box-shadow来实现小星星效果`
+        id: 3, title:'星空背景效果',path:"/starrySky",html:`使用SASS，通过设置box-shadow来实现小星星效果`
       },
       {
-        id: 4, title:'自定义指令v-slide-in',html:`<a href='/slidein' style='border-radius: 3px;font-size: 12px;display: inline-block;padding: 5px 8px;color: #fff;
-        background: #409EFF;text-decoration: none;'>体验一下</a>`
+        id: 4, title:'自定义指令v-slide-in',path:"/slidein",html:`封装自定义指令`
       },
     ])
     let activeName =  ref("");
