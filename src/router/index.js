@@ -1,7 +1,7 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
-  history: createWebHashHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
@@ -63,6 +63,11 @@ const router = createRouter({
       path: '/Earth',
       name: 'Earth',
       component: () => import('../views/Earth.vue')
+    },
+    {
+      path: '/slidein',
+      name: 'slidein',
+      component: () => import('../views/slidein.vue')
     },
   ]
 })

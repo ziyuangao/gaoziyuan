@@ -30,6 +30,10 @@ export default {
         id: 3, title:'星空背景效果',html:`<a href='/starrySky' style='border-radius: 3px;font-size: 12px;display: inline-block;padding: 5px 8px;color: #fff;
         background: #409EFF;text-decoration: none;'>体验一下</a></br>使用SASS，通过设置box-shadow来实现小星星效果`
       },
+      {
+        id: 4, title:'自定义指令v-slide-in',html:`<a href='/slidein' style='border-radius: 3px;font-size: 12px;display: inline-block;padding: 5px 8px;color: #fff;
+        background: #409EFF;text-decoration: none;'>体验一下</a>`
+      },
     ])
     let activeName =  ref("");
     return { list,activeName }
