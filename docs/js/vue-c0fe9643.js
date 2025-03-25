@@ -1,4 +1,4 @@
-import{_ as c}from"./index-a0f56c28.js";import{ab as p,a as _,aQ as l,T as o,U as i,a5 as m,$ as r,I as u,ar as f,_ as x,V as b}from"./vendor-09eb5a69.js";const v={setup(){const n=p([{id:1,title:"说一个调试bug时遇到的一个离谱问题",name:"a1",html:`测试提出一个bug，页面A下一页跳到页面B后，返回上一页，某些原本存在的控制逻辑失效了，
+import{_ as c}from"./index-9b2d2271.js";import{ab as p,a as _,aQ as l,T as o,U as i,a5 as m,$ as r,I as u,ar as f,_ as x,V as b}from"./vendor-09eb5a69.js";const v={setup(){const n=p([{id:1,title:"说一个调试bug时遇到的一个离谱问题",name:"a1",html:`测试提出一个bug，页面A下一页跳到页面B后，返回上一页，某些原本存在的控制逻辑失效了，
         我拿到这个bug反馈后，寻思这不就是初始化可能没控制到，导致原本的代码没走么，找一找页面A初始化逻辑应该就可以了。</br>当我去找页面A代码时，明确找到初始化控制表单
         展示的部分，业务写的很详细，注释什么的都有，代码很长，初始化生效了，没有问题，可是为什么从下一页到上一页会出问题呢？我就继续找原因，会不会是返回的时候字段或者传参有问题，
         我就去查一下两个页面之间传参是不是一致，控制台打印数据，emmm也正常，没有问题，这就头大了，这数据都没问题，到底是出在哪，最笨的办法，从上一页按钮开始，不断打印数据，
