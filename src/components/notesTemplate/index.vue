@@ -37,11 +37,9 @@ export default {
       defaultActive: "1",
       menuList: [
         {id: 1,title: "原生js",disabled: false,path:'/notes/javaScript',index:'1'},
-        {id: 2,title: "jQuery",disabled: true,path:'/notes/jQuery',index:'2'},
         {id: 3,title: "Vue",disabled: false,path:'/notes/vue',index:'3'},
         {id: 4,title: "小程序相关",disabled: true,path:'/notes/miniProgram',index:'4'},
-        {id: 4,title: "流水账",disabled: true,path:'/notes/food',index:'5'},
-        {id: 4,title: "练手",disabled: false,path:'/notes/test',index:'6'},
+        {id: 4,title: "流水账",disabled: false,path:'/notes/food',index:'5'},
       ],
     });
     const menuItemClick = (item)=>{
@@ -64,6 +62,7 @@ export default {
   overflow: hidden;
   background: url('../../assets/note-bg.png') no-repeat center;
   background-size: cover;
+  overflow-y: auto;
 }
 .notesWrap /deep/ .el-menu{
   background:none;

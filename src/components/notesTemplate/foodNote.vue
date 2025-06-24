@@ -12,8 +12,12 @@
       </el-table-column>
     </el-table>
     <div class="text_right">
-      <el-pagination v-model:currentPage="state.tableConfig.currentPage" layout="prev, pager, next"
-        :total="state.tableConfig.total" @current-change="handleCurrentChange" />
+      <el-pagination v-model:currentPage="state.tableConfig.currentPage"
+        :size="state.tableConfig.size"
+        :default-page-size="state.tableConfig.size"
+        layout="prev, pager, next,sizes"
+        :total="state.tableConfig.total" @current-change="handleCurrentChange"
+        @size-change="handleSizeChange" />
     </div>
   </div>
 </template>
@@ -26,9 +30,14 @@ const state = reactive({
   tableConfig: {
     data: [],
     currentPage: 1,
+    size:20,
     total: null,
   }
 })
+const handleSizeChange = (val)=>{
+  state.tableConfig.size = val;
+  getTableData();
+}
 const handleCurrentChange = (val) => {
   state.tableConfig.currentPage = val;
   getTableData();
@@ -37,7 +46,7 @@ const getTableData = () => {
   state.loading = true;
   setTimeout(() => {
     let resData = foodData;
-    state.tableConfig.data = resData.slice((state.tableConfig.currentPage - 1) * 10, state.tableConfig.currentPage * 10);
+    state.tableConfig.data = resData.slice((state.tableConfig.currentPage - 1) * state.tableConfig.size, state.tableConfig.currentPage * state.tableConfig.size);
     state.tableConfig.total = resData.length;
     state.loading = false;
   }, 200);

@@ -69,6 +69,11 @@ const router = createRouter({
       name: 'slidein',
       component: () => import('../views/slidein.vue')
     },
+    {
+      path:'/test',
+      name:'test',
+      component:()=>import('../views/testFile.vue')
+    }
   ]
 })
 
