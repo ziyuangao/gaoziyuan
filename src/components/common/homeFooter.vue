@@ -6,20 +6,11 @@
                 <p class="footer-description">分享创意</p>
             </div>
 
-            <div class="footer-section">
+            <!-- <div class="footer-section">
                 <h3 class="footer-heading">快速链接</h3>
                 <ul class="footer-list">
                     <li v-for="link in quickLinks" :key="link.text">
                         <a :href="link.url">{{ link.text }}</a>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- <div class="footer-section">
-                <h3 class="footer-heading">分类</h3>
-                <ul class="footer-list">
-                    <li v-for="category in categories" :key="category">
-                        <a href="#">{{ category }}</a>
                     </li>
                 </ul>
             </div> -->
@@ -28,7 +19,7 @@
                 <h3 class="footer-heading">小玩具</h3>
                 <ul class="footer-list">
                     <li v-for="item in toys" :key="item">
-                        <el-button @click="navigatorTo(item.path)" >{{ item.text }}</el-button>
+                        <el-button @click="navigatorTo(item.path)" link type="primary" >{{ item.text }}</el-button>
                     </li>
                 </ul>
             </div>
@@ -51,17 +42,11 @@ const quickLinks = ref([
     { text: '联系我们', url: '/contact' },
 ])
 
-// const categories = ref([
-//     '技术',
-//     '生活',
-//     '创意',
-//     '旅行',
-// ])
-
 const toys = ref([
     { id:1,text:"抛硬币",path:"/YesOrNo"},
     { id:2,text:"星空背景",path:"/starrySky"},
     { id:3,text:"转动地球",path:"/Earth"},
+    { id:4,text:"LOL大乱斗",path:"/lol"},
 ])
 
 const currentYear = computed(() => new Date().getFullYear())
