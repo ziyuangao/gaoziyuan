@@ -40,7 +40,7 @@
 
 <script setup>
 import hearoList from "@/dataPool/hero_list.json";
-import { onMounted,ref,computed } from 'vue';
+import { ref,computed } from 'vue';
 const dataPool = computed(() => {
     // 默认情况
     if(!currentType.value && !keyword.value){

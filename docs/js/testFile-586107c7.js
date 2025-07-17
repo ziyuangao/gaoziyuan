@@ -1,1 +1,0 @@
-import{_ as r}from"./index-76e3c5cb.js";import{T as s,U as c}from"./vendor-09eb5a69.js";function l(t){let o=[];for(let e=0;e<t[0].length;e++)o.push(t.map(n=>n[e]));return o}console.log(l([[1,4,6,10],[5,9,12,15],[7,11,16,23]]));const p={};function a(t,o,e,n,f,i){return s(),c("div")}const m=r(p,[["render",a]]);export{m as default};
