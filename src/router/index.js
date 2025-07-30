@@ -6,7 +6,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'Loading',
-      redirect:'/home',
+      redirect: '/home',
       // component: Loading
     },
     {
@@ -17,17 +17,22 @@ const router = createRouter({
     {
       path: '/notes',
       name: 'Notes',
-      redirect:'/notes/javaScript',
+      redirect: '/notes/javaScript',
       component: () => import('../views/Notes.vue'),
-      children:[
-        {path:'/notes/javaScript',component:()=>import('../components/notesTemplate/javaScript.vue')},
-        {path:'/notes/jQuery',component:()=>import('../components/notesTemplate/jQuery.vue')},
-        {path:'/notes/vue',component:()=>import('../components/notesTemplate/vue.vue')},
-        {path:'/notes/miniProgram',component:()=>import('../components/notesTemplate/miniProgram.vue')},
-        {path:'/notes/food',component:()=>import('../components/notesTemplate/foodNote.vue')},
-        {path:'/notes/music',component:()=>import('../components/notesTemplate/music.vue')},
-        {path:'/notes/test',component:()=>import('../components/notesTemplate/test.vue')},
+      children: [
+        { path: '/notes/javaScript', component: () => import('../components/notesTemplate/javaScript.vue') },
+        { path: '/notes/jQuery', component: () => import('../components/notesTemplate/jQuery.vue') },
+        { path: '/notes/vue', component: () => import('../components/notesTemplate/vue.vue') },
+        { path: '/notes/miniProgram', component: () => import('../components/notesTemplate/miniProgram.vue') },
+        { path: '/notes/food', component: () => import('../components/notesTemplate/foodNote.vue') },
+        { path: '/notes/music', component: () => import('../components/notesTemplate/music.vue') },
+        { path: '/notes/test', component: () => import('../components/notesTemplate/test.vue') },
       ],
+    },
+    {
+      path: '/plans',
+      name: 'Plans',
+      component: () => import('../views/21Plans.vue')
     },
     {
       path: '/daily',
@@ -75,9 +80,9 @@ const router = createRouter({
       component: () => import('../views/slidein.vue')
     },
     {
-      path:'/test',
-      name:'test',
-      component:()=>import('../views/testFile.vue')
+      path: '/test',
+      name: 'test',
+      component: () => import('../views/testFile.vue')
     }
   ]
 })

@@ -5,11 +5,11 @@
       <el-table-column prop="breakfast" label="早饭" />
       <el-table-column prop="lunch" label="午饭" />
       <el-table-column prop="dinner" label="晚饭" />
-      <el-table-column label="操作" width="120px">
+      <!-- <el-table-column label="操作" width="120px">
         <template #default="scope">
           <el-button @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
         </template>
-      </el-table-column>
+      </el-table-column> -->
     </el-table>
     <div class="text_right">
       <el-pagination v-model:currentPage="state.tableConfig.currentPage"
