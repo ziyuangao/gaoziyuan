@@ -16,6 +16,15 @@
             </div> -->
 
             <div class="footer-section">
+                <h3 class="footer-heading">有点意思</h3>
+                <ul class="footer-list">
+                    <li v-for="item in u148" :key="item">
+                        <el-button @click="navigatorTo(item.path)" link type="primary" >{{ item.text }}</el-button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
                 <h3 class="footer-heading">小玩具</h3>
                 <ul class="footer-list">
                     <li v-for="item in toys" :key="item">
@@ -46,7 +55,12 @@ const toys = ref([
     { id:1,text:"抛硬币",path:"/YesOrNo"},
     { id:2,text:"星空背景",path:"/starrySky"},
     { id:3,text:"转动地球",path:"/Earth"},
-    { id:4,text:"LOL大乱斗",path:"/lol"},
+
+])
+
+const u148 = ref([
+    { id:1,text:"LOL大乱斗",path:"/lol"},
+    { id:2,text:"舔狗日记",path:"/dog"},
 ])
 
 const currentYear = computed(() => new Date().getFullYear())

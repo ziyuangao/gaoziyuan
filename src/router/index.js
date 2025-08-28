@@ -80,10 +80,10 @@ const router = createRouter({
       component: () => import('../views/slidein.vue')
     },
     {
-      path: '/test',
-      name: 'test',
-      component: () => import('../views/testFile.vue')
-    }
+      path: '/dog',
+      name: 'Dog',
+      component: () => import('../views/u148/dog.vue')
+    },
   ]
 })
 
