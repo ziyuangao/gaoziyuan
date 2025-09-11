@@ -1,0 +1,1 @@
+import{_ as e}from"./index-5fc42480.js";import{T as t,U as _}from"./vendor-0f9eaa46.js";const o={setup(){}};function c(r,s,n,a,p,u){return t(),_("div",null,"jquery")}const f=e(o,[["render",c],["__scopeId","data-v-e15382c9"]]);export{f as default};

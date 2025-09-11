@@ -84,6 +84,11 @@ const router = createRouter({
       name: 'Dog',
       component: () => import('../views/u148/dog.vue')
     },
+    {
+      path: '/random',
+      name: 'random',
+      component: () => import('../views/u148/random.vue')
+    },
   ]
 })
 
