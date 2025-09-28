@@ -1,4 +1,4 @@
-import{_ as y}from"./index-5fc42480.js";import{a as d,aQ as x,T as s,U as l,V as i,I as f,ar as m,a5 as r,$ as o,a4 as g,a3 as w}from"./vendor-0f9eaa46.js";const v={setup(){let p=[{id:1,title:"我16年毕业后都做了那些，为什么会走上编程这条路？",answer:`
+import{_ as y}from"./index-388004ba.js";import{a as d,aQ as x,T as s,U as l,V as i,I as f,ar as m,a5 as r,$ as o,a4 as g,a3 as w}from"./vendor-0f9eaa46.js";const v={setup(){let p=[{id:1,title:"我16年毕业后都做了那些，为什么会走上编程这条路？",answer:`
         <p style='text-indent: 32px;'>我于16年毕业于河南省郑州市北环路华北水利水电大学建筑工程技术专业，毕业后在郑州棉纺路锦艺城附近一家名为 玉博苑 的玉器零售批发公司做门店管理的基础工作，
           负责日常进货，做专业证书，整理财务报表，门店信息统计，日常营业收入分析，目标客户人群分析，员工培训等。因与总经理经营理念不同，最终分道扬镳。</p>
         <p style='text-indent: 32px;'>而后去过广东惠州《伯恩光学有限公司》全自动光学检测部门（简称AIO）工作半年，因论文需要答辩，终止了合同</p>

@@ -1,7 +1,7 @@
 <template>
 <div class="common-layout">
     <el-container>
-        <el-header>LOL英雄查询 version {{hearoList.version}}</el-header>
+        <el-header>LOL英雄查询 version {{heroData.version}}</el-header>
         <el-container>
             <el-aside class="aside-left">
                 <div class="aside-input"><el-input v-model="keyword" placeholder="关键词" clearable /></div>
@@ -39,22 +39,22 @@
 </template>
 
 <script setup>
-import hearoList from "@/dataPool/hero_list.json";
-import { ref,computed } from 'vue';
+import { ref,computed,onMounted,reactive } from 'vue';
+let heroData = reactive({});
 const dataPool = computed(() => {
     // 默认情况
     if(!currentType.value && !keyword.value){
-        return hearoList.hero
+        return heroData.hero
     } else {
         if(!currentType.value){// 只搜索了 类型
-            return hearoList.hero.filter(item=>item.keywords.includes(keyword.value))
+            return heroData.hero.filter(item=>item.keywords.includes(keyword.value))
         } else if (!keyword.value){// 只搜索了 名字
-            return hearoList.hero.filter(item=>item.roles.includes(currentType.value))
+            return heroData.hero.filter(item=>item.roles.includes(currentType.value))
         } else {//名字 + 类型
             if(!currentType.value){//在全英雄类目下搜索
-                return hearoList.hero.filter(item=>item.roles.includes(currentType.value))
+                return heroData.hero.filter(item=>item.roles.includes(currentType.value))
             } else {
-                return hearoList.hero.filter(item=>item.roles.includes(currentType.value) && item.keywords.includes(keyword.value))
+                return heroData.hero.filter(item=>item.roles.includes(currentType.value) && item.keywords.includes(keyword.value))
             }
         }
     }
@@ -93,7 +93,23 @@ const randomHero = ()=>{
         }
     }
 }
+const getHeroData = async ()=>{
+    await fetch("https://game.gtimg.cn/images/lol/act/img/js/heroList/hero_list.js").then(res=>{
+        if (!res.ok) {
+            throw new Error('网络响应不正常');
+        }
+        return res.json();
+    }).then(res=>{
+        Object.assign(heroData,res)
+    })
+    .catch(()=>{
+        this.$message.error('获取英雄列表失败');
+    })
+}
 
+onMounted(()=>{
+    getHeroData()
+})
 
 </script>
 
