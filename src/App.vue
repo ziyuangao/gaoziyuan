@@ -16,7 +16,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .min1200{
   min-width: 1200px;
   font-family: Inter, 'Helvetica Neue', Helvetica, 'PingFang SC',

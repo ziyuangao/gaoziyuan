@@ -33,8 +33,8 @@ export default {
                 { id: 3, src: "https://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/avatar1.jpg" },
                 { id: 4, src: "https://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/avatar2.jpg" },
                 // 被注释掉的图片
-                // {id:5,src:"http://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/avatar5.jpg"},
-                { id: 6, src: "http://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/avatar6.jpg" },
+                // {id:5,src:"https://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/avatar5.jpg"},
+                { id: 6, src: "https://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/avatar6.jpg" },
             ]
         })
         return { state } // 返回响应式状态供模板使用

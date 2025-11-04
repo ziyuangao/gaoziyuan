@@ -94,6 +94,11 @@ const router = createRouter({
       name: 'words',
       component: () => import('../views/u148/words.vue')
     },
+    {
+      path: '/deepseek',
+      name: 'deepseek',
+      component: () => import('../views/u148/deepseek.vue')
+    },
   ]
 })
 

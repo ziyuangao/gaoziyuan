@@ -27,7 +27,7 @@ export default {
 .pcBanner{
     width: 100%;
     height: 768px;
-    background: url('http://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/pc-banner-bg.jpg') no-repeat 100% 90%;
+    background: url('https://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/pc-banner-bg.jpg') no-repeat 100% 90%;
     background-size: 100%;
 }
 .pcBanner .bannerText{

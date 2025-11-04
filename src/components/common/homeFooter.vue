@@ -61,6 +61,7 @@ const toys = ref([
 const u148 = ref([
     { id:1,text:"LOL大乱斗",path:"/lol"},
     { id:2,text:"舔狗日记",path:"/dog"},
+    { id:3,text:"deepseek",path:"/deepseek"},
 ])
 
 const currentYear = computed(() => new Date().getFullYear())
