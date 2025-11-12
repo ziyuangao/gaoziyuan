@@ -259,6 +259,7 @@ export default {
     flex-basis:40%;
     font-size:24px;
     line-height:40px;
+    position: relative;
 }
 .printerForMobile{
     flex: 1;
@@ -286,5 +287,25 @@ export default {
 .toys{
     width: 50%;
     margin: 0 auto;
+}
+.printer::after{
+    position: absolute;
+    opacity: 0;
+    width: 150px;
+    height: 150px;
+    content: '';
+    background-image: url('../../assets/miniprogram.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    top: 130px;
+    right: 100%;
+}
+.printer:hover::after{
+    top: 130px;
+    right: -110px;
+    transform: translateX(-50%);
+    opacity: 1;
+    transition: all 0.3s ease-in-out;
+    z-index: 10;
 }
 </style>
