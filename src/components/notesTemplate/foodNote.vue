@@ -1,75 +1,83 @@
 <template>
   <div class="page">
-    <el-table :data="state.tableConfig.data" :laoding="state.loading" size="small">
-      <el-table-column prop="date" label="日期" width="120px" />
-      <el-table-column prop="breakfast" label="早饭" />
-      <el-table-column prop="lunch" label="午饭" />
-      <el-table-column prop="dinner" label="晚饭" />
-      <!-- <el-table-column label="操作" width="120px">
-        <template #default="scope">
-          <el-button @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-        </template>
-      </el-table-column> -->
-    </el-table>
-    <div class="text_right">
-      <el-pagination v-model:currentPage="state.tableConfig.currentPage"
-        :size="state.tableConfig.size"
-        :default-page-size="state.tableConfig.size"
-        layout="prev, pager, next,sizes"
-        :total="state.tableConfig.total" @current-change="handleCurrentChange"
-        @size-change="handleSizeChange" />
-    </div>
+    <el-link class="list_item" v-for="item in showList" underline :key="item.url" :href="item.url"
+      :type="fileTypeConfig[item.fileType]" target="_blank" :icon="iconConfig(item.fileType)">
+      {{ item.title }}
+    </el-link>
   </div>
 </template>
-
 <script setup>
-import foodData from '@/dataPool/food.json'
-import { onMounted, reactive } from 'vue';
-const state = reactive({
-  loading: false,
-  tableConfig: {
-    data: [],
-    currentPage: 1,
-    size:20,
-    total: null,
+import { FolderOpened, Document, Files } from '@element-plus/icons-vue'
+const fileTypeConfig = {
+  'doc': 'info',
+  'sheet': 'success',
+  'other': 'danger',
+}
+
+const iconConfig = (type) => {
+  let result = null;
+  switch (type) {
+    case 'doc':
+      result = Document
+      break;
+    case 'sheet':
+      result = FolderOpened
+      break;
+    case 'other':
+      result = Files
+      break;
+    default:
+      result = Files
+      break;
   }
-})
-const handleSizeChange = (val)=>{
-  state.tableConfig.size = val;
-  getTableData();
+  return result;
 }
-const handleCurrentChange = (val) => {
-  state.tableConfig.currentPage = val;
-  getTableData();
-}
-const getTableData = () => {
-  state.loading = true;
-  setTimeout(() => {
-    let resData = foodData;
-    state.tableConfig.data = resData.slice((state.tableConfig.currentPage - 1) * state.tableConfig.size, state.tableConfig.currentPage * state.tableConfig.size);
-    state.tableConfig.total = resData.length;
-    state.loading = false;
-  }, 200);
-}
-const handleEdit = (item) => {
-  console.log(item)
-}
-onMounted(() => {
-  getTableData();
-})
-    // return {state,handleCurrentChange,handleEdit}
+const showList = [
+  {
+    title: '饮食记录',
+    url: 'https://docs.qq.com/doc/DQWFvZWVqcm9TQW1Q',
+    fileType: 'sheet',
+  },
+  {
+    title: 'jQuery方法预览',
+    url: 'https://app.xmind.cn/share/izVfAdHr?xid=CbXvd14E',
+    fileType: 'other'
+  },
+  {
+    title: '21天计划V1.0.0',
+    url: 'https://docs.qq.com/sheet/DSFB5Q3hscnNuTmhu',
+    fileType: 'sheet',
+  },
+  {
+    title: '原生js关于DOM操作',
+    url: 'https://app.xmind.cn/share/UfsisFvD?xid=9GvbfUcU',
+    fileType: 'other'
+  },
+  {
+    title: '动态信誉积分防黄牛系统设计说明',
+    url: 'https://docs.qq.com/doc/DQWFvZWVqcm9TQW1Q',
+    fileType: 'doc',
+  },
+  {
+    title: '阴阳师浅梦墨汐抽奖记录',
+    url: 'https://docs.qq.com/sheet/DQUJBZkRqWGZaZGNx',
+    fileType: 'sheet'
+  },
+]
 </script>
 <style scoped>
 .page {
-  padding: 16px;
-  box-sizing: border-box;
-  background: rgb(250, 249, 222);
-  border-radius: 8px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-flow: row wrap;
 }
 
-.text_right {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 8px;
+.list_item {
+  font-size: 18px;
+}
+
+.list_item~.list_item {
+  margin-left: 18px;
 }
 </style>
