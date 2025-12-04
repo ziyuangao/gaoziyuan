@@ -35,7 +35,7 @@ const iconConfig = (type) => {
 const showList = [
   {
     title: '饮食记录',
-    url: 'https://docs.qq.com/doc/DQWFvZWVqcm9TQW1Q',
+    url: 'https://docs.qq.com/sheet/DSGtqTm1SaFhXRGti',
     fileType: 'sheet',
   },
   {
