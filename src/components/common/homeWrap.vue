@@ -23,95 +23,95 @@ import { onMounted, reactive } from 'vue';
 import { CountUp } from "countup.js";
 import * as echarts from 'echarts';
 import chinaJson from "@/dataPool/china.json";
-echarts.registerMap('china',chinaJson);
+echarts.registerMap('china', chinaJson);
 export default {
-    components:{
+    components: {
         userInfo,
     },
-    setup(){
+    setup() {
         const state = reactive({
-            days:undefined,
-            timer:null,
-            btnArr:[
-                { id:1,text:"抛硬币",path:"/YesOrNo"},
-                { id:2,text:"星空背景",path:"/starrySky"},
-                { id:3,text:"转动地球",path:"/Earth"},
+            days: undefined,
+            timer: null,
+            btnArr: [
+                { id: 1, text: "抛硬币", path: "/YesOrNo" },
+                { id: 2, text: "星空背景", path: "/starrySky" },
+                { id: 3, text: "转动地球", path: "/Earth" },
             ]
         })
-        const computedDays = ()=>{
+        const computedDays = () => {
             // 开始时间 时间戳 - 结束日期 时间戳 / 1000 / 60 / 24 
             const startDay = new Date('2018/09/23').getTime();
             const now = new Date().getTime();
-            let days = Math.floor((now-startDay) / (1000*60*60*24))
+            let days = Math.floor((now - startDay) / (1000 * 60 * 60 * 24))
             return days;
         }
-        const setCharts = ()=>{
+        const setCharts = () => {
             const myName = echarts.init(document.getElementById('myName'));
-            if(!myName){
+            if (!myName) {
                 return
             }
             myName.setOption({
                 graphic: {
                     elements: [
-                    {
-                        type: 'text',
-                        left: 'center',
-                        top: 'center',
-                        style: {
-                            text: '高梓原',
-                            fontSize: 80,
-                            fontWeight: 'bold',
-                            lineDash: [0, 200],
-                            lineDashOffset: 0,
-                            fill: 'transparent',
-                            stroke: '#000',
-                            lineWidth: 1
-                        },
-                        keyframeAnimation: {
-                        duration: 3000,
-                        loop: false,
-                        keyframes: [
-                            {
-                                percent: 0.7,
-                                style: {
-                                    fill: 'transparent',
-                                    lineDashOffset: 200,
-                                    lineDash: [200, 0]
-                                }
+                        {
+                            type: 'text',
+                            left: 'center',
+                            top: 'center',
+                            style: {
+                                text: '高梓原',
+                                fontSize: 80,
+                                fontWeight: 'bold',
+                                lineDash: [0, 200],
+                                lineDashOffset: 0,
+                                fill: 'transparent',
+                                stroke: '#000',
+                                lineWidth: 1
                             },
-                            {
-                                // Stop for a while.
-                                percent: 0.8,
-                                style: {
-                                    fill: 'transparent'
-                                }
-                            },
-                            {
-                                percent: 1,
-                                style: {
-                                    fill: 'black'
-                                }
+                            keyframeAnimation: {
+                                duration: 3000,
+                                loop: false,
+                                keyframes: [
+                                    {
+                                        percent: 0.7,
+                                        style: {
+                                            fill: 'transparent',
+                                            lineDashOffset: 200,
+                                            lineDash: [200, 0]
+                                        }
+                                    },
+                                    {
+                                        // Stop for a while.
+                                        percent: 0.8,
+                                        style: {
+                                            fill: 'transparent'
+                                        }
+                                    },
+                                    {
+                                        percent: 1,
+                                        style: {
+                                            fill: 'black'
+                                        }
+                                    }
+                                ]
                             }
-                        ]
                         }
-                    }
                     ]
                 }
             })
         }
-        const setCharts1 = ()=>{
+        const setCharts1 = () => {
             const chinaMap = echarts.init(document.getElementById('chinaMap'));
-            if(!chinaMap){
+            if (!chinaMap) {
                 return
             }
             chinaMap.setOption({
-                title:{
-                    text:"工作经验",
-                    left:"center",
-                    color:"#606266",
-                    fontSize:24,
-                    lineHeight:36,
-                    fontWeight:"bold"
+                title: {
+                    text: "工作经验",
+                    left: "center",
+                    color: "#606266",
+                    fontSize: 24,
+                    lineHeight: 36,
+                    fontWeight: "bold"
                 },
                 tooltip: {}, // 鼠标移到图里面的浮动提示框
                 dataRange: {
@@ -121,11 +121,11 @@ export default {
                     text: ["High", "Low"],
                     realtime: true,
                     calculable: true,
-                    color: ["#C0C4CC","#409EFF"],
+                    color: ["#C0C4CC", "#409EFF"],
                 },
-                geo:{
+                geo: {
                     roam: true,
-                    map:'china',
+                    map: 'china',
                     label: {
                         show: true, // 是否显示对应地名
                         color: "#303133",
@@ -135,7 +135,7 @@ export default {
                         borderWidth: "2",
                         areaColor: "rgba(64,158,255,0.3)",
                     },
-                    emphasis:{
+                    emphasis: {
                         areaColor: "rgba(64,158,255,1)",
                         shadowOffsetX: 0,
                         shadowOffsetY: 0,
@@ -144,7 +144,7 @@ export default {
                         shadowColor: "#409EFF",
                     }
                 },
-                series:[
+                series: [
                     {
                         type: "scatter",
                         coordinateSystem: "geo", // 对应上方配置
@@ -154,32 +154,32 @@ export default {
                         type: "map",
                         geoIndex: 0,
                         data: [
-                        {
-                            name: "北京",
-                            value: 3,
-                        },
-                        {
-                            name: "上海",
-                            value: 2,
-                        },
-                        {
-                            name: "陕西",
-                            value: 1,
-                        },
+                            {
+                                name: "北京",
+                                value: 3,
+                            },
+                            {
+                                name: "上海",
+                                value: 2,
+                            },
+                            {
+                                name: "陕西",
+                                value: 1,
+                            },
                         ],
                     },
                 ]
             })
         }
-        const setCharts2 = ()=>{
+        const setCharts2 = () => {
             const skillsChart = echarts.init(document.getElementById('skills'));
-            if(!skillsChart){
+            if (!skillsChart) {
                 return
             }
             skillsChart.setOption({
                 title: {
                     text: '使用技能',
-                    subtext:'skills',
+                    subtext: 'skills',
                     left: 'center'
                 },
                 tooltip: {
@@ -191,104 +191,111 @@ export default {
                 },
                 series: [
                     {
-                    name: 'Skill From',
-                    type: 'pie',
-                    radius: '50%',
-                    data: [
-                        { value: 50, name: 'Vue2' },
-                        { value: 25, name: 'Vue3' },
-                        { value: 10, name: 'jQuery' },
-                        { value: 14, name: 'uniapp' },
-                        { value: 18, name: 'wxml' },
-                        { value: 8, name: 'react' }
-                    ],
-                    emphasis: {
-                        itemStyle: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        name: 'Skill From',
+                        type: 'pie',
+                        radius: '50%',
+                        data: [
+                            { value: 50, name: 'Vue2' },
+                            { value: 25, name: 'Vue3' },
+                            { value: 10, name: 'jQuery' },
+                            { value: 14, name: 'uniapp' },
+                            { value: 18, name: 'wxml' },
+                            { value: 8, name: 'react' }
+                        ],
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
                         }
-                    }
                     }
                 ]
             })
         }
-        onMounted(()=>{
-            // printer()
+        onMounted(() => {
             state.days = computedDays();//计算2018年9月23日距离今天一共多少天
-            const countup = new CountUp('targetId',state.days);
-            if(!countup.error){
+            const countup = new CountUp('targetId', state.days);
+            if (!countup.error) {
                 countup.start()
-            }else{
+            } else {
                 console.log(countup.error)
             }
             setCharts();
             setCharts1();
             setCharts2();
         })
-        return {state}
+        return { state }
     }
 }
 </script>
 <style scoped>
-.homeWrap{
-    width:100%;
-    background:rgba(233,233,233,.5);
-    padding:1rem 0;
+.homeWrap {
+    width: 100%;
+    background: rgba(233, 233, 233, .5);
+    padding: 1rem 0;
+    box-sizing: border-box;
 }
-.homeWrap .content{
-    border-radius:16px;
-    overflow:hidden;
-    padding:1rem;
-    width:1200px;
-    background:#fff;
-    margin:0 auto;
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
+
+.homeWrap .content {
+    padding: 1rem;
+    background: #fff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
-.contentForMobile{
+
+.contentForMobile {
     width: 96%;
     margin: 0 auto;
-    background:#fff;
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
+    background: #fff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
-.printer{
-    flex-basis:40%;
-    font-size:24px;
-    line-height:40px;
+
+.printer {
+    flex-basis: 40%;
+    font-size: 24px;
+    line-height: 40px;
     position: relative;
 }
-.printerForMobile{
+
+.printerForMobile {
     flex: 1;
     margin-left: .4rem;
     font-size: .8rem;
     line-height: 1rem;
 }
-#myName{
+
+#myName {
     height: 8rem;
 }
-#chinaMap{
-    height: 100vh;
-    width: 70%;
+
+#chinaMap {
+    height: 80vh;
+    width: 60%;
     margin-top: 10px;
 }
-#skills{
+
+#skills {
     width: 30%;
     height: 400px;
 }
-.flex-box{
+
+.flex-box {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
+    overflow: hidden;
 }
-.toys{
+
+.toys {
     width: 50%;
     margin: 0 auto;
 }
-.printer::after{
+
+.printer::after {
     position: absolute;
     opacity: 0;
     width: 150px;
@@ -300,12 +307,13 @@ export default {
     top: 130px;
     right: 100%;
 }
-.printer:hover::after{
+
+.printer:hover::after {
     top: 130px;
-    right: -110px;
+    right: 0px;
     transform: translateX(-50%);
     opacity: 1;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
     z-index: 10;
 }
 </style>

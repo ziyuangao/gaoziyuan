@@ -26,7 +26,7 @@ export default {
       menuList: [
         { id: 1, menuName: "首页", path: "/home", disabled: false },
         { id: 2, menuName: "笔记", path: "/notes", disabled: false },
-        { id: 3, menuName: "生活", path: "/daily", disabled: true },
+        { id: 3, menuName: "生活", path: "/daily", disabled: false },
         { id: 4, menuName: "关于", path: "/about", disabled: true },
       ],
     });
