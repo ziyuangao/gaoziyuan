@@ -1,6 +1,11 @@
 # Small Note
 
+
 ![CI/CD](https://github.com/ziyuangao/gaoziyuan/actions/workflows/ci.yml/badge.svg)
+
+# 个人网站
+
+这是我的个人介绍网站。
 
 一个基于 Vue 3 + Vite 的前端练手项目，用于记录和管理笔记。
 
@@ -43,6 +48,11 @@
 ├── vite.config.js # Vite 配置
 └── package.json # 项目依赖
 
-## 开源协议
+## 许可
 
-本项目使用 [MIT](LICENSE) 协议
+- **网站代码**（HTML、CSS、JavaScript）：基于 [MIT 许可证](LICENSE)
+- **网站内容**（文字、个人照片、作品集）：保留所有权利，未经许可不得复制或商业使用
+
+## 使用说明
+
+你可以自由查看、学习本网站的代码实现，但内容部分请勿擅自使用。
