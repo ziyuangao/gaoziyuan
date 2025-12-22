@@ -25,10 +25,13 @@
 import { ref, onMounted, onUnmounted,nextTick } from 'vue'
 import { ElImage } from 'element-plus'
 import { ossUrl,photosFolder } from '@/config/resources'
+import { useDeviceDetection } from '@/assets/useDeviceDetection.js'
+
+const { isMobile } = useDeviceDetection()
 
 // ========== 配置常量 ==========
 const COLUMN_COUNT = 4      // 固定4列
-const ITEM_HEIGHT = 350     // 图片高度
+const ITEM_HEIGHT = isMobile.value ? 100 : 350     // 图片高度
 const LAZY_OFFSET = 100     // 懒加载交叉距离
 
 // ========== 模拟数据 ==========

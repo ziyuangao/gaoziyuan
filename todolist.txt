@@ -1,6 +1,3 @@
-1 路由命名与路径大小写不统一
-统一约定：路径用全小写 + 中划线（如 /yes-or-no），组件名 PascalCase，路由 name 用驼峰（如 yesOrNo），后期扩展更舒服。
-
 3 布局容器高度/绝对定位逻辑重复
 如 notesWrap 里大量绝对定位
 .notesWrap {
@@ -54,32 +51,6 @@ UI 统一后，整个“玩具集合”看起来更专业。
 如 .menuList 是一个组件样式，但有潜力作为全局“头部菜单”样式使用。
 优化点：
 每个组件内的 scoped 样式只做局部微调。
-
-8 逻辑与性能上的小优化点
-
-WaterfallPhoto.vue 中懒加载状态 photo.loaded 未被真正利用
-你有 loaded: false 字段和 IntersectionObserver，把 photo.loaded 设为 true，但模板里 <el-image> 没有根据 loaded 字段做任何显示/占位逻辑。
-优化点：
-在模板中根据 photo.loaded 决定是否渲染 <el-image>，或者关闭 loading="lazy"，自己用 v-if 控制实际的加载时机。
-或者把 photo.loaded 用来加一个淡入动画 / loading 占位 skeleton。
-WaterfallPhoto.vue 中 ref="photoRefs" 的使用有 bug 风险
-Vue3 中同一个 ref 用在 v-for 时，需要配合 onUpdated 或手动收集元素；目前的写法有可能拿不到完整数组或重复。
-优化点：
-改为 ref="setPhotoRef"，在 setup 里提供一个收集函数：
-      const photoRefs = []      const setPhotoRef = el => { if (el) photoRefs.push(el) }
-或者用 onUpdated 中重新遍历/重建 observer。
-main.js 中只注册了一个自定义指令，未来可以做成指令插件
-当前：
-    import myDirectives  from './directives';    
-    app.directive('myslide-in',myDirectives.directives['myslide-in']);
-优化点：
-把 directives.js 改成一个 install(app) 的插件，内部统一注册所有指令：
-    export default {        
-        install(app) {          
-            app.directive('myslide-in', { ... }) 
-        }
-    }
-main.js 里 .use(directivesPlugin) 即可，后续再增加自定义指令就不用改 main。
 
 9 代码风格 / 规范一致性
 omposition API 与 Options API 混用
