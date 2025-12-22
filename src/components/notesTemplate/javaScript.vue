@@ -72,8 +72,9 @@ export default {
   color: #666666;
 }
 
-.collapse-content /deep/ .el-collapse-item__header,
-.collapse-content /deep/ .el-collapse-item__content {
+.collapse-content :deep(.el-collapse-item__header),
+.collapse-content :deep(.el-collapse-item__content)  {
   padding: 0 12px;
   box-sizing: border-box;
-}</style>
+}
+</style>

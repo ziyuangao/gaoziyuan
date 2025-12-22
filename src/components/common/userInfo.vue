@@ -16,6 +16,7 @@
 
 <script>
 import { reactive } from 'vue'; // 导入 Vue 的响应式 API
+import { ossUrl,avatarFolder } from '../../config/resources';
 export default {
     setup() {
         // 创建响应式状态对象
@@ -28,13 +29,11 @@ export default {
             // 轮播图图片数组
             avatarArr: [
                 // 存储轮播图片的信息，包含id和图片地址
-                { id: 1, src: 'https://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/ai1.jpg' },
-                { id: 2, src: 'https://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/ai2.jfif' },
-                { id: 3, src: "https://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/avatar1.jpg" },
-                { id: 4, src: "https://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/avatar2.jpg" },
-                // 被注释掉的图片
-                // {id:5,src:"https://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/avatar5.jpg"},
-                { id: 6, src: "https://gaoziyuan.oss-cn-beijing.aliyuncs.com/img/avatar6.jpg" },
+                { id: 1, src: `${ossUrl}${avatarFolder}ai1.jpg` },
+                { id: 2, src: `${ossUrl}${avatarFolder}ai2.jfif` },
+                { id: 3, src: `${ossUrl}${avatarFolder}avatar1.jpg` },
+                { id: 4, src: `${ossUrl}${avatarFolder}avatar2.jpg` },
+                { id: 5, src: `${ossUrl}${avatarFolder}avatar6.jpg` },
             ]
         })
         return { state } // 返回响应式状态供模板使用

@@ -27,6 +27,7 @@
 import { reactive } from "vue";
 import { useRouter } from "vue-router";
 import menuList from '../common/menuList.vue'
+import { noteMenuList } from "../../config/menu";
 export default {
   components:{
     menuList
@@ -35,12 +36,7 @@ export default {
     const router = useRouter();
     const state = reactive({
       defaultActive: "1",
-      menuList: [
-        {id: 1,title: "原生js",disabled: false,path:'/notes/javaScript',index:'1'},
-        {id: 3,title: "Vue",disabled: false,path:'/notes/vue',index:'3'},
-        {id: 4,title: "小程序相关",disabled: true,path:'/notes/miniProgram',index:'4'},
-        {id: 4,title: "流水账",disabled: false,path:'/notes/food',index:'5'},
-      ],
+      menuList: noteMenuList,
     });
     const menuItemClick = (item)=>{
       router.push(item.path)
@@ -64,11 +60,11 @@ export default {
   background-size: cover;
   overflow-y: auto;
 }
-.notesWrap /deep/ .el-menu{
+.notesWrap :deep(.el-menu) {
   background:none;
   border-right: none;
 }
-.notesWrap /deep/ .el-menu-item{
+.notesWrap :deep(.el-menu-item) {
   font-size: 18px;
   height: 80px;
   line-height: 80px;

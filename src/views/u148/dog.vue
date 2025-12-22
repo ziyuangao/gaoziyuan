@@ -33,6 +33,9 @@ import dogImg1 from '@/assets/u148/dog-1.jpg'
 import dogImg2 from '@/assets/u148/dog-2.jpg'
 import dogImg3 from '@/assets/u148/dog-3.jpg'
 import dogImg4 from '@/assets/u148/dog-4.jpg'
+import { ossUrl,u148Folder } from '../../config/resources'
+import dayjs from 'dayjs'
+import simpleApi from '@/api/fetch.js';
 // fetch对象
 var requestOptions = {
   method: 'GET',
@@ -41,53 +44,25 @@ var requestOptions = {
 
 const canvas = ref(null);//创建canvas对象
 const ctx = ref(null);//导出出canvas对象
+const today = dayjs(new Date).format('YYYY年MM月DD日');
 
 // 图片类型
 const type = ref('1')
 
 // 阿里云图片地址
 const imgUrl = computed(() => {
-  return `https://gaoziyuan.oss-cn-beijing.aliyuncs.com/u148/dog-${type.value}.jpg`
+  return `${ossUrl}${u148Folder}dog-${type.value}.jpg`
 })
-// 日期格式化
-const formatDate = (date, format = 'yyyy-mm-dd') => {
-  // 处理传入的日期参数
-  const parsedDate = new Date(date);
-
-  // 验证日期是否有效
-  if (isNaN(parsedDate.getTime())) {
-    throw new Error('Invalid date provided');
-  }
-
-  // 获取日期各部分
-  const year = parsedDate.getFullYear();
-  const month = parsedDate.getMonth() + 1;
-  const day = parsedDate.getDate();
-
-  // 替换格式化字符串中的占位符
-  return format
-    .replace(/yyyy/g, year)
-    .replace(/yy/g, String(year).slice(-2))
-    .replace(/mm/g, String(month).padStart(2, '0'))
-    .replace(/m/g, month)
-    .replace(/dd/g, String(day).padStart(2, '0'))
-    .replace(/d/g, day);
-}
-
 
 // 舔狗文案
 const dogText = ref('')
 
 // 获取舔狗文案
 const getDogText = () => {
-  const today = formatDate(new Date(), 'yyyy年mm月dd日')
-  fetch("https://v2.xxapi.cn/api/dog", requestOptions)
-    .then(response => response.text())
-    .then(data => {
-      const result = JSON.parse(data)
-      dogText.value = `${today},${result.data}`
-    })
-    .catch(error => console.log('error', error))
+  simpleApi.get("https://v2.xxapi.cn/api/dog",requestOptions).then(res=>{
+    const result = res.data;
+    dogText.value = `${today},${result}`
+  })
 }
 // 生成图片
 const getDogImg = () => {
@@ -167,7 +142,6 @@ const getDogImg = () => {
     ctx.value.strokeRect(20, 20, canvas.value.width - 40, canvas.value.height - 40);
 
     ElMessage.success('图片生成成功！');
-    downloadImage()
 }
 
   img.onerror = function () {
@@ -183,16 +157,6 @@ const getDogImg = () => {
   };
   img.src = imgConfig[type.value];
   
-}
-
-// 下载图片
-const downloadImage = () => {
-  if (!canvas.value) return;
-
-  const link = document.createElement('a');
-  link.download = `舔狗日记-${formatDate(new Date(), 'yyyy-mm-dd')}.png`;
-  link.href = canvas.value.toDataURL('image/png');
-  link.click();
 }
 
 onMounted(() => {

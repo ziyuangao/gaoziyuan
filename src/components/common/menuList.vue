@@ -16,6 +16,7 @@
 <script>
 import { reactive } from "vue";
 import { useRouter } from "vue-router";
+import { homeMenuList } from "../../config/menu";
 export default {
   setup() {
     const router = useRouter();
@@ -23,12 +24,7 @@ export default {
       drawerConfig: {
         direction: "ltr",
       },
-      menuList: [
-        { id: 1, menuName: "首页", path: "/home", disabled: false },
-        { id: 2, menuName: "笔记", path: "/notes", disabled: false },
-        { id: 3, menuName: "照片墙", path: "/daily", disabled: false },
-        { id: 4, menuName: "关于", path: "/about", disabled: true },
-      ],
+      menuList: homeMenuList,
     });
     const switchRouter = (item) => {
       if (item.path && !item.disabled) {

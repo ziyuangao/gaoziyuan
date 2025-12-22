@@ -43,27 +43,12 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router';
+import { u148MenuList,toyMenuList } from '@/config/menu';
 const route = useRouter();
-const quickLinks = ref([
-    { text: '首页', url: '/' },
-    { text: '关于', url: '/about' },
-    { text: '文章', url: '/articles' },
-    { text: '联系我们', url: '/contact' },
-])
 
-const toys = ref([
-    { id:1,text:"抛硬币",path:"/YesOrNo"},
-    { id:2,text:"星空背景",path:"/starrySky"},
-    { id:3,text:"转动地球",path:"/Earth"},
+const toys = ref(toyMenuList)
 
-])
-
-const u148 = ref([
-    { id:1,text:"LOL大乱斗",path:"/lol"},
-    { id:2,text:"舔狗日记",path:"/dog"},
-    { id:3,text:"deepseek",path:"/deepseek"},
-    { id:4,text:"本地播放器",path:"/notes/music"},
-])
+const u148 = ref(u148MenuList)
 
 const currentYear = computed(() => new Date().getFullYear())
 

@@ -33,7 +33,7 @@ export default {
             days: undefined,
             timer: null,
             btnArr: [
-                { id: 1, text: "抛硬币", path: "/YesOrNo" },
+                { id: 1, text: "抛硬币", path: "/coin" },
                 { id: 2, text: "星空背景", path: "/starrySky" },
                 { id: 3, text: "转动地球", path: "/Earth" },
             ]
