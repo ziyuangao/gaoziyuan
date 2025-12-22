@@ -27,18 +27,19 @@ import { ElImage } from 'element-plus'
 import { ossUrl,photosFolder } from '@/config/resources'
 import { useDeviceDetection } from '@/assets/useDeviceDetection.js'
 
-const { isMobile } = useDeviceDetection()
+const { screenWidth } = useDeviceDetection()
+
 
 // ========== 配置常量 ==========
 const COLUMN_COUNT = 4      // 固定4列
-const ITEM_HEIGHT = isMobile.value ? 100 : 350     // 图片高度
+const ITEM_HEIGHT = screenWidth.value < 768 ? 100 : 350     // 图片高度
 const LAZY_OFFSET = 100     // 懒加载交叉距离
 
 // ========== 模拟数据 ==========
 // 296
 const photos = ref(Array.from({ length: 296 }, (_, i) => ({
   id: i + 1,
-  thumbnail: `${ossUrl}${photosFolder}${i+1}.jpg?x-oss-process=image/resize,w_350,h_350,m_fill`,
+  thumbnail: `${ossUrl}${photosFolder}${i+1}.jpg?x-oss-process=image/resize,w_${ITEM_HEIGHT},h_${ITEM_HEIGHT},m_fill`,
   loaded: false
 })))
 
@@ -164,7 +165,6 @@ const previewUrl = ((photo)=>{
 /* 图片项 */
 .photo-item {
   width: 100%;
-  height: 350px;
   border-radius: 8px;
   overflow: hidden;
   background: #e0e0e0;
