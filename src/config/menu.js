@@ -9,7 +9,7 @@ const noteMenuList = [
     {id: 1,title: "原生js",disabled: false,path:'/notes/javaScript',index:'1'},
     {id: 3,title: "Vue",disabled: false,path:'/notes/vue',index:'3'},
     {id: 4,title: "小程序相关",disabled: true,path:'/notes/miniProgram',index:'4'},
-    {id: 4,title: "流水账",disabled: false,path:'/notes/food',index:'5'},
+    {id: 4,title: "流水账",disabled: false,path:'/notes/networkfile',index:'5'},
 ]
 
 const toyMenuList = [

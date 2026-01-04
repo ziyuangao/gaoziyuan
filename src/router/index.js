@@ -64,7 +64,14 @@ const routes = [
         },
         component: () => import('../components/notesTemplate/test.vue')
       },
-    ],
+      {
+        path: '/notes/networkfile',
+        meta: {
+          title: '笔记-networkfile'
+        },
+        component: () => import('../components/notesTemplate/networkfile.vue')
+      },
+    ]
   },
   {
     path: '/plans',
