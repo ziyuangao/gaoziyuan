@@ -1,182 +1,207 @@
 <template>
-  <div class="waterfall-container">
-    <!-- 固定4列 -->
-    <div class="waterfall-column" v-for="col in 4" :key="col">
-      <div 
-        v-for="photo in getColumnPhotos(col - 1)" 
-        :key="photo.id"
-        class="photo-item"
-        ref="photoRefs"
-      >
-        <el-image
-          class="photo-image"
-          :src="photo.thumbnail"
-          fit="cover"
-          :preview-src-list="previewUrl(photo)"
-          loading="lazy"
-          hide-on-click-modal
-        />
-      </div>
+  <div class="photo-wall">
+    <el-image
+      v-for="item in loadedPhotos"
+      :key="item.id"
+      class="photo-item"
+      :src="item.thumbnail"
+      fit="cover"
+      :preview-src-list="[item.url]"
+      loading="lazy"
+      hide-on-click-modal
+    />
+    
+    <!-- 加载状态提示 -->
+    <div v-if="loading" class="loading-tip">
+      正在加载中...
+    </div>
+    <div v-if="noMore" class="no-more-tip">
+      已经到底了
     </div>
   </div>
+  <!-- 滚动检测哨兵 -->
+  <div ref="sentinelRef" class="sentinel"></div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted,nextTick } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { ElImage } from 'element-plus'
-import { ossUrl,photosFolder } from '@/config/resources'
+import { ossUrl, photosFolder } from '@/config/resources'
 import { useDeviceDetection } from '@/assets/useDeviceDetection.js'
 
 const { screenWidth } = useDeviceDetection()
 
+const MAXNUMBER = 296; // 图片总数
+const LOAD_COUNT = 10; // 每次加载图片数量
+const ITEM_HEIGHT = screenWidth.value < 768 ? 100 : 350;  // 移动端时设置图片宽高
+const LOAD_THRESHOLD = 100; // 滚动触发的阈值(px)
+const INITIAL_LOAD_COUNT = 3; // 初始加载次数，用于填满屏幕
 
-// ========== 配置常量 ==========
-const COLUMN_COUNT = 4      // 固定4列
-const ITEM_HEIGHT = screenWidth.value < 768 ? 100 : 350     // 图片高度
-const LAZY_OFFSET = 100     // 懒加载交叉距离
+const photos = ref([]); // 所有图片数据
+const loadedPhotos = ref([]); // 已加载显示的图片
+const currentIndex = ref(0); // 当前加载到的索引
+const loading = ref(false); // 加载状态
+const noMore = ref(false); // 是否没有更多图片
+const sentinelRef = ref(null); // IntersectionObserver 哨兵元素
+const observer = ref(null); // IntersectionObserver 实例
 
-// ========== 模拟数据 ==========
-// 296
-const photos = ref(Array.from({ length: 296 }, (_, i) => ({
-  id: i + 1,
-  thumbnail: `${ossUrl}${photosFolder}${i+1}.jpg?x-oss-process=image/resize,w_${ITEM_HEIGHT},h_${ITEM_HEIGHT},m_fill`,
-  loaded: false
-})))
+// ========== 准备全部数据 ==========
+const initPhotosData = () => {
+  const photoList = [];
 
-// ========== 瀑布流布局 ==========
-const columns = ref([]) // 存储每列的图片
-
-// 初始化瀑布流布局（只执行一次）
-const initWaterfall = () => {
-  // 初始化4个空列
-  columns.value = Array.from({ length: COLUMN_COUNT }, () => [])
-  
-  // 每列的高度记录
-  const columnHeights = new Array(COLUMN_COUNT).fill(0)
-  
-  // 分配图片到最短列
-  photos.value.forEach((photo, index) => {
-    // 找到最短的列
-    let shortestCol = 0
-    for (let i = 1; i < COLUMN_COUNT; i++) {
-      if (columnHeights[i] < columnHeights[shortestCol]) {
-        shortestCol = i
-      }
-    }
-    
-    // 将图片添加到最短列
-    columns.value[shortestCol].push({
-      ...photo,
+  for (let i = 0; i < MAXNUMBER; i++) {
+    photoList.push({
+      id: i + 1,
+      thumbnail: `${ossUrl}${photosFolder}${i + 1}.jpg?x-oss-process=image/resize,w_${ITEM_HEIGHT},h_${ITEM_HEIGHT},m_fill`,
+      url: `${ossUrl}${photosFolder}${i + 1}.jpg`,
     })
-    
-    // 更新列高度
-    columnHeights[shortestCol] += ITEM_HEIGHT + 15 // 15为间距
-  })
+  }
+
+  photos.value = photoList.reverse();
 }
 
-// 获取指定列的图片
-const getColumnPhotos = (colIndex) => {
-  return columns.value[colIndex] || []
+// ========== 加载图片数据 ==========
+const loadData = () => {
+  // 如果正在加载或没有更多数据，直接返回
+  if (loading.value || noMore.value) {
+    return false;
+  }
+  
+  const startIdx = currentIndex.value * LOAD_COUNT;
+  
+  // 检查是否还有数据可加载
+  if (startIdx >= photos.value.length) {
+    noMore.value = true;
+    return false;
+  }
+  
+  loading.value = true;
+  
+  const endIdx = Math.min(startIdx + LOAD_COUNT, photos.value.length);
+  const newPhotos = photos.value.slice(startIdx, endIdx);
+  
+  // 添加到已加载列表
+  loadedPhotos.value.push(...newPhotos);
+  currentIndex.value++;
+  
+  // 如果是模拟加载，可以保留setTimeout，实际项目中根据图片加载完成事件来设置
+  // 这里假设图片加载很快，直接设置加载完成
+  loading.value = false;
+  
+  // 检查是否加载完毕
+  if (currentIndex.value * LOAD_COUNT >= photos.value.length) {
+    noMore.value = true;
+  }
+  
+  return true;
 }
 
-// ========== 懒加载实现 ==========
-let observer = null
-const photoRefs = ref([])
-
-// 初始化Intersection Observer
-const initLazyLoad = () => {
-
-  observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const photoElement = entry.target
-        const photoId = photoElement.dataset.id
-        
-        // 找到对应的图片数据
-        const photo = photos.value.find(p => p.id == photoId)
-        if (photo && !photo.loaded) {
-          photo.loaded = true
-          // 停止观察
-          observer.unobserve(photoElement)
+// ========== 判断是否充满可视区 ==========
+const isViewportFilled = () => {
+  const totalHeight = document.documentElement.scrollHeight;
+  const viewportHeight = window.innerHeight;
+  
+  // 如果页面总高度 < 可视区域高度，说明没填满
+  return totalHeight >= viewportHeight;
+}
+// ========== 初始化 IntersectionObserver ==========
+const initIntersectionObserver = () => {
+  if (observer.value) {
+    observer.value.disconnect();
+  }
+  
+  observer.value = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !loading.value && !noMore.value) {
+          loadData();
         }
-      }
-    })
-  }, {
-    rootMargin: `${LAZY_OFFSET}px 0px` // 上下交叉100px触发
-  })
+      });
+    },
+    {
+      root: null,
+      rootMargin: `${LOAD_THRESHOLD}px`,
+      threshold: 0.1
+    }
+  );
+  
+  if (sentinelRef.value) {
+    observer.value.observe(sentinelRef.value);
+  }
 }
 
-// 开始观察所有图片元素
-const startObserving = () => {
-  if (!observer) return
+// ========== 初始化函数 ==========
+const init = async () => {
+  initPhotosData();
   
-  nextTick(() => {
-    photoRefs.value.forEach(element => {
-      if (element) {
-        observer.observe(element)
-      }
-    })
-  })
+  // 首次加载一批图片
+  loadData();
+  
+  // 等待DOM渲染
+  await new Promise(resolve => setTimeout(resolve, 100));
+  
+  // 继续加载直到填满屏幕（最多加载3次）
+  let loadAttempts = 0;
+  const maxAttempts = INITIAL_LOAD_COUNT;
+  
+  while (loadAttempts < maxAttempts && !isViewportFilled() && !noMore.value) {
+    if (!loading.value) {
+      loadData();
+      loadAttempts++;
+      // 等待图片加载和DOM渲染
+      await new Promise(resolve => setTimeout(resolve, 150));
+    }
+  }
+  
+  // 初始化 IntersectionObserver
+  initIntersectionObserver();
 }
 
 // ========== 生命周期 ==========
 onMounted(() => {
-  // 1. 初始化瀑布流布局
-  initWaterfall()
-  
-  // 2. 初始化懒加载
-  initLazyLoad()
-  
-  // 3. 开始观察
-  startObserving()
-})
+  init();
+});
 
 onUnmounted(() => {
-  if (observer) {
-    observer.disconnect()
+  if (observer.value) {
+    observer.value.disconnect();
   }
-})
-
-const previewUrl = ((photo)=>{
-  return [photo.thumbnail.split('?')[0]]
-})
+});
 </script>
 
 <style scoped>
-
-.waterfall-container {
-  width: 100%;
-  margin: 0 auto;
+.photo-wall {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(4, 1fr);
   padding: 20px;
-  box-sizing: border-box;
-  display: flex;
-  gap: 15px;
   background: #f5f7fa;
+  min-height: 100vh;
 }
 
-/* 列样式 */
-.waterfall-column {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-/* 图片项 */
 .photo-item {
-  width: 100%;
   border-radius: 8px;
-  overflow: hidden;
-  background: #e0e0e0;
-  transition: all 0.3s ease;
   cursor: pointer;
 }
 
-/* Element Plus 图片样式 */
-.photo-image {
+.sentinel {
+  height: 1px;
   width: 100%;
-  height: 100%;
-  display: block;
+  pointer-events: none;
 }
 
+.loading-tip {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+.no-more-tip {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 30px;
+  color: #999;
+  font-size: 14px;
+}
 </style>
