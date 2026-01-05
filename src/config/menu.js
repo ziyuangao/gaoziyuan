@@ -2,7 +2,7 @@ const homeMenuList = [
     { id: 1, menuName: "首页", path: "/home", disabled: false },
     { id: 2, menuName: "笔记", path: "/notes/javascript", disabled: false },
     { id: 3, menuName: "照片墙", path: "/photoWall", disabled: false },
-    { id: 4, menuName: "关于", path: "/about", disabled: true },
+    { id: 4, menuName: "关于", path: "/about", disabled: false },
 ]
 
 const noteMenuList = [
