@@ -1,1 +1,0 @@
-import{_ as e}from"./index-9c92b344.js";import{T as o,U as r}from"./vendor-13527336.js";const t={setup(){}};function _(n,a,c,s,i,p){return o(),r("div",null,"miniProgaram")}const l=e(t,[["render",_],["__scopeId","data-v-26374cbb"]]);export{l as default};
