@@ -1,6 +1,6 @@
 {
   "name": "small-note",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "curriculum vitae",
   "author": "<ziyuan_gao@163.com>",
   "private": true,
@@ -16,23 +16,23 @@
     "countup.js": "^2.8.0",
     "dayjs": "^1.11.19",
     "echarts": "^5.5.1",
-    "element-plus": "^2.3.6",
+    "element-plus": "^2.13.0",
     "openai": "^6.3.0",
-    "pinia": "^2.0.36",
+    "pinia": "^3.0.4",
     "sass": "^1.77.8",
     "sass-loader": "^13.3.3",
     "three": "^0.173.0",
-    "vue": "^3.3.2",
-    "vue-router": "^4.2.0"
+    "vue": "^3.5.26",
+    "vue-router": "^4.6.4"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
-    "@vitejs/plugin-vue": "^4.2.3",
-    "@vitejs/plugin-vue-jsx": "^3.0.1",
+    "@vitejs/plugin-vue": "^6.0.3",
+    "@vitejs/plugin-vue-jsx": "^5.1.3",
     "@vue/eslint-config-prettier": "^7.1.0",
     "eslint": "^8.39.0",
     "eslint-plugin-vue": "^9.11.0",
     "prettier": "^2.8.8",
-    "vite": "^4.3.5"
+    "vite": "^7.3.1"
   }
 }

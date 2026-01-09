@@ -15,63 +15,63 @@ const routes = [
     component: () => import('../views/Home.vue')
   },
   {
-    path: '/notes',
-    name: 'Notes',
+    path: '/note',
+    name: 'Note',
     meta: {
       title: '笔记路由背景模板'
     },
     component: () => import('../views/Notes.vue'),
-    children: [
-      {
-        path: '/notes/javaScript',
-        meta: {
-          title: '笔记-javaScript'
-        },
-        component: () => import('../components/notesTemplate/javaScript.vue')
-      },
-      {
-        path: '/notes/jQuery',
-        meta: {
-          title: '笔记-jQuery'
-        },
-        component: () => import('../components/notesTemplate/jQuery.vue')
-      },
-      {
-        path: '/notes/vue',
-        meta: {
-          title: '笔记-vue'
-        },
-        component: () => import('../components/notesTemplate/vue.vue')
-      },
-      {
-        path: '/notes/miniProgram',
-        meta: {
-          title: '笔记-小程序'
-        },
-        component: () => import('../components/notesTemplate/miniProgram.vue')
-      },
-      {
-        path: '/music',
-        meta: {
-          title: '笔记-deepseek和我一起做的音乐播放器'
-        },
-        component: () => import('../views/u148/music.vue')
-      },
-      {
-        path: '/notes/test',
-        meta: {
-          title: '笔记-代码测试'
-        },
-        component: () => import('../components/notesTemplate/test.vue')
-      },
-      {
-        path: '/notes/networkfile',
-        meta: {
-          title: '笔记-networkfile'
-        },
-        component: () => import('../components/notesTemplate/networkfile.vue')
-      },
-    ]
+    // children: [
+    //   {
+    //     path: '/notes/javaScript',
+    //     meta: {
+    //       title: '笔记-javaScript'
+    //     },
+    //     component: () => import('../components/notesTemplate/javaScript.vue')
+    //   },
+    //   {
+    //     path: '/notes/jQuery',
+    //     meta: {
+    //       title: '笔记-jQuery'
+    //     },
+    //     component: () => import('../components/notesTemplate/jQuery.vue')
+    //   },
+    //   {
+    //     path: '/notes/vue',
+    //     meta: {
+    //       title: '笔记-vue'
+    //     },
+    //     component: () => import('../components/notesTemplate/vue.vue')
+    //   },
+    //   {
+    //     path: '/notes/miniProgram',
+    //     meta: {
+    //       title: '笔记-小程序'
+    //     },
+    //     component: () => import('../components/notesTemplate/miniProgram.vue')
+    //   },
+    //   {
+    //     path: '/music',
+    //     meta: {
+    //       title: '笔记-deepseek和我一起做的音乐播放器'
+    //     },
+    //     component: () => import('../views/u148/music.vue')
+    //   },
+    //   {
+    //     path: '/notes/test',
+    //     meta: {
+    //       title: '笔记-代码测试'
+    //     },
+    //     component: () => import('../components/notesTemplate/test.vue')
+    //   },
+    //   {
+    //     path: '/notes/networkfile',
+    //     meta: {
+    //       title: '笔记-networkfile'
+    //     },
+    //     component: () => import('../components/notesTemplate/networkfile.vue')
+    //   },
+    // ]
   },
   {
     path: '/plans',
