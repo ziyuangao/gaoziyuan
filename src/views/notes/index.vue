@@ -2,14 +2,7 @@
 	<el-container class="notes-wrap">
 		<menu-list />
 		<div class="note-content">
-			<header>
-				<div>
-					<el-text size="large" type="primary">我的笔记</el-text>
-				</div>
-				<div>
-					<el-text size="small" type="info">记录乱七八糟的想法</el-text>
-				</div>
-			</header>
+			<notes-header />
 			<section>
 				<el-card class="card-item" shadow="hover" v-for="item in networkFile" underline :key="item.url">
 					<el-link :href="item.url" :type="fileTypeConfig[item.fileType]" target="_blank"
@@ -27,35 +20,36 @@ defineOptions({
 	name: 'NotesIndex'
 })
 import menuList from '@/components/common/menuList.vue'
+import notesHeader from './header.vue'
 import { FolderOpened, Document, Files } from '@element-plus/icons-vue'
 const iconConfig = (type) => {
-	let result = null;
+	let result = null
 	switch (type) {
 		case 'doc':
 			result = Document
-			break;
+			break
 		case 'sheet':
 			result = FolderOpened
-			break;
+			break
 		case 'other':
 			result = Files
-			break;
+			break
 		default:
 			result = Files
-			break;
+			break
 	}
-	return result;
+	return result
 }
 const fileTypeConfig = {
-	'doc': 'info',
-	'sheet': 'success',
-	'other': 'danger',
+	doc: 'info',
+	sheet: 'success',
+	other: 'danger'
 }
 let networkFile = [
 	{
 		title: '饮食记录',
 		url: 'https://docs.qq.com/sheet/DSGtqTm1SaFhXRGti',
-		fileType: 'sheet',
+		fileType: 'sheet'
 	},
 	{
 		title: 'jQuery方法预览',
@@ -65,17 +59,17 @@ let networkFile = [
 	{
 		title: '动态信誉积分防黄牛系统设计说明',
 		url: 'https://docs.qq.com/doc/DQWFvZWVqcm9TQW1Q',
-		fileType: 'doc',
+		fileType: 'doc'
 	},
 	{
 		title: '短剧-失语之城',
 		url: 'https://docs.qq.com/doc/DQUdscWZ2YkV5WUZk',
-		fileType: 'doc',
+		fileType: 'doc'
 	},
 	{
 		title: '婚恋app-《缘桥计划：基于行为匹配的渐进式婚恋关系验证平台》',
 		url: 'https://docs.qq.com/doc/DQW1GdG9GQW9qbE1H',
-		fileType: 'doc',
+		fileType: 'doc'
 	},
 	{
 		title: '原生js关于DOM操作',
@@ -85,26 +79,26 @@ let networkFile = [
 	{
 		title: '21天计划V1.0.0',
 		url: 'https://docs.qq.com/sheet/DSFB5Q3hscnNuTmhu',
-		fileType: 'sheet',
+		fileType: 'sheet'
 	},
 	{
 		title: '阴阳师浅梦墨汐抽奖记录',
 		url: 'https://docs.qq.com/sheet/DQUJBZkRqWGZaZGNx',
 		fileType: 'sheet'
-	},
+	}
 ]
 
 // 洗牌算法
 const shuffleArray = (array) => {
-	const newArray = [...array]; // 创建副本以避免修改原数组
+	const newArray = [...array] // 创建副本以避免修改原数组
 	for (let i = newArray.length - 1; i > 0; i--) {
-		const j = Math.floor(Math.random() * (i + 1));
-		[newArray[i], newArray[j]] = [newArray[j], newArray[i]]; // 交换元素
+		const j = Math.floor(Math.random() * (i + 1))
+			;[newArray[i], newArray[j]] = [newArray[j], newArray[i]] // 交换元素
 	}
-	return newArray;
+	return newArray
 }
 
-networkFile = shuffleArray(networkFile);
+networkFile = shuffleArray(networkFile)
 </script>
 
 <style scoped>

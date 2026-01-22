@@ -1,26 +1,8 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
-/**
- * Vue Router 路由规则
- *
- * 命名规则：
- * - 路由name：使用PascalCase（大驼峰），如：HomePage, NoteList, UserProfile
- * - 组件文件：使用kebab-case（烤肉串），如：home-page.vue, note-list.vue
- * - 路由path：使用kebab-case（烤肉串），如：/home-page, /notes/list
- *
- * 路由层级：
- * - 一级路由：核心页面，如首页、笔记、相册、关于
- * - 二级路由：功能模块，如笔记详情、相册分类、设置页面
- * - 三级路由：具体功能或详情页，如笔记编辑、照片详情
- *
- * 文件组织：
- * - views/：存放页面级组件（对应路由）
- * - features/：存放功能模块（可按业务领域分组）
- * - components/：存放通用组件
- *
- */
-
-const routes = [
+let routes = [];//全部路由
+// 顶层路由
+const topRoutes = [
   {
     path: '/',
     name: 'Loading',
@@ -36,27 +18,27 @@ const routes = [
     path: '/notes',
     name: 'NoteList',
     meta: { title: '笔记' },
-    component: () => import('../views/NoteView.vue')
+    component: () => import('../views/notes/index.vue')
   },
   {
     path: '/photos',
     name: 'PhotoWall',
     meta: { title: '照片墙' },
-    component: () => import('../views/photoWall/index.vue')
+    component: () => import('../views/photos/index.vue')
   },
   {
     path: '/about',
     name: 'AboutMe',
     meta: { title: '关于我' },
-    component: () => import('../views/About.vue')
+    component: () => import('../views/about/index.vue')
   },
   {
     path: '/404',
     name: 'NotFound',
     meta: { title: '404' },
-    component: () => import('../views/404.vue')
+    component: () => import('../views/404/index.vue')
   },
-
+  
   {
     path: '/plans',
     name: 'Plans',
@@ -65,58 +47,45 @@ const routes = [
     },
     component: () => import('../views/plans/21Plans.vue')
   },
+]
 
+// 工具路由
+const toolsRoutes = [
   {
-    path: '/decorationBreak',
-    name: 'decorationBreak',
-    meta: {
-      title: '文字背景断行'
-    },
-    component: () => import('../views/others/decorationBreak.vue')
-  },
-  {
-    path: '/starrySky',
-    name: 'starrySky',
-    meta: {
-      title: '星空背景'
-    },
-    component: () => import('../views/others/starrySky.vue')
-  },
-
-  {
-    path: '/coin',
+    path: '/tools/coin',
     name: 'coin',
     meta: {
       title: 'every coin has two sides'
     },
-    component: () => import('../views/others/coin.vue')
+    component: () => import('../views/tools/coin.vue')
   },
   {
-    path: '/rotateTheEarth',
-    name: 'rotateTheEarth',
+    path: '/tools/music',
+    name: 'music',
     meta: {
-      title: '转动地球'
+      title: '本地音乐播放器'
     },
-    component: () => import('../views/others/rotateTheEarth.vue')
+    component: () => import('../views/tools/music.vue')
   },
   {
-    path: '/lol',
-    name: '英雄联盟',
+    path: '/tools/lol',
+    name: '随机工具',
+    meta: { title: '英雄联盟随机工具' },
+    component: () => import('../views/tools/LOL.vue')
+  },
+  {
+    path: '/tools/randomName',
+    name: 'random',
     meta: {
-      title: '英雄联盟solo工具'
+      title: '随机名字生成器'
     },
-    component: () => import('../views/u148/LOL.vue')
+    component: () => import('../views/tools/randomName.vue')
   },
+]
+// u148路由
+const u148Routes = [
   {
-    path: '/slidein',
-    name: 'slidein',
-    meta: {
-      title: '滑动进入'
-    },
-    component: () => import('../views/others/slideIn.vue')
-  },
-  {
-    path: '/dog',
+    path: '/u148/dog',
     name: 'Dog',
     meta: {
       title: '舔狗日记'
@@ -124,20 +93,48 @@ const routes = [
     component: () => import('../views/u148/dog.vue')
   },
   {
-    path: '/random',
-    name: 'random',
-    meta: {
-      title: '随机名字生成器'
-    },
-    component: () => import('../views/u148/random.vue')
-  },
-  {
-    path: '/deepseek',
+    path: '/u148/deepseek',
     name: 'deepseek',
     component: () => import('../views/u148/deepseek.vue')
   }
 ]
+// 快速链接路由
+const quickLinksRoutes = [
+  {
+    path: '/links/decorationBreak',
+    name: 'decorationBreak',
+    meta: {
+      title: '文字背景断行'
+    },
+    component: () => import('../views/links/decorationBreak.vue')
+  },
+  {
+    path: '/links/starrySky',
+    name: 'starrySky',
+    meta: {
+      title: '星空背景'
+    },
+    component: () => import('../views/links/starrySky.vue')
+  },
+  {
+    path: '/links/rotateTheEarth',
+    name: 'rotateTheEarth',
+    meta: {
+      title: '转动地球'
+    },
+    component: () => import('../views/links/rotateTheEarth.vue')
+  },
+  {
+    path: '/links/slidein',
+    name: 'slidein',
+    meta: {
+      title: '滑动进入'
+    },
+    component: () => import('../views/links/slideIn.vue')
+  },
+]
 
+routes = [...topRoutes, ...toolsRoutes, ...u148Routes, ...quickLinksRoutes]
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes

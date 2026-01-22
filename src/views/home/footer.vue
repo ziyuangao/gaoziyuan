@@ -10,7 +10,7 @@
                 <h3 class="footer-heading">快速链接</h3>
                 <ul class="footer-list">
                     <li v-for="link in quickLinks" :key="link.id">
-                        <el-button @click="navigatorTo(item.path)" link type="primary" >{{ link.text }}</el-button>
+                        <el-button @click="navigatorTo(link.path)" link type="primary" >{{ link.text }}</el-button>
                     </li>
                 </ul>
             </div>

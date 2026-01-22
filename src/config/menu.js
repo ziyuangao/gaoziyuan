@@ -13,21 +13,21 @@ const noteMenuList = [
 ]
 // 小工具 具备一定功能的 能解决问题的
 const toolsMenuList = [
-    { id:1,text:"抛硬币",path:"/coin"},
-    { id:2,text:"LOL随机英雄",path:"/lol"},
-    { id:3,text:"随机id生成器",path:"/random"},
-    { id:4,text:"本地播放器",path:"/music"},
+    { id:1,text:"抛硬币",path:"/tools/coin"},
+    { id:2,text:"LOL随机英雄",path:"/tools/lol"},
+    { id:3,text:"随机id生成器",path:"/tools/randomName"},
+    { id:4,text:"本地播放器",path:"/tools/music"},
 ]
 // 好玩的 娱乐性质的
 const u148MenuList = [
-    { id:1,text:"deepseek",path:"/deepseek"},
-    { id:2,text:"舔狗日记",path:"/dog"},
+    { id:1,text:"deepseek",path:"/u148/deepseek"},
+    { id:2,text:"舔狗日记",path:"/u148/dog"},
 ]
 
 const quickLinksList = [
-    { id:1,text:"滑动进入",path:"/slidein"},
-    { id:2,text:"星空背景",path:"/starrySky"},
-    { id:3,text:"转动地球",path:"/rotateTheEarth"},
+    { id:1,text:"滑动进入",path:"/links/slidein"},
+    { id:2,text:"星空背景",path:"/links/starrySky"},
+    { id:3,text:"转动地球",path:"/links/rotateTheEarth"},
 ]
 
 export { homeMenuList, noteMenuList,u148MenuList,toolsMenuList,quickLinksList }
