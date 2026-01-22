@@ -47,12 +47,3 @@
 ├── .prettierrc.json # Prettier 配置
 ├── vite.config.js # Vite 配置
 └── package.json # 项目依赖
-
-## 许可
-
-- **网站代码**（HTML、CSS、JavaScript）：基于 [MIT 许可证](LICENSE)
-- **网站内容**（文字、个人照片、作品集）：保留所有权利，未经许可不得复制或商业使用
-
-## 使用说明
-
-你可以自由查看、学习本网站的代码实现，但内容部分请勿擅自使用。

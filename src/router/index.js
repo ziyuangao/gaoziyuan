@@ -1,78 +1,62 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
+/**
+ * Vue Router 路由规则
+ *
+ * 命名规则：
+ * - 路由name：使用PascalCase（大驼峰），如：HomePage, NoteList, UserProfile
+ * - 组件文件：使用kebab-case（烤肉串），如：home-page.vue, note-list.vue
+ * - 路由path：使用kebab-case（烤肉串），如：/home-page, /notes/list
+ *
+ * 路由层级：
+ * - 一级路由：核心页面，如首页、笔记、相册、关于
+ * - 二级路由：功能模块，如笔记详情、相册分类、设置页面
+ * - 三级路由：具体功能或详情页，如笔记编辑、照片详情
+ *
+ * 文件组织：
+ * - views/：存放页面级组件（对应路由）
+ * - features/：存放功能模块（可按业务领域分组）
+ * - components/：存放通用组件
+ *
+ */
+
 const routes = [
   {
     path: '/',
     name: 'Loading',
-    redirect: '/home',
+    redirect: '/home'
   },
   {
     path: '/home',
-    name: 'Home',
-    meta: {
-      title: '首页'
-    },
-    component: () => import('../views/Home.vue')
+    name: 'HomePage',
+    meta: { title: '首页' },
+    component: () => import('../views/home/index.vue')
   },
   {
-    path: '/note',
-    name: 'Note',
-    meta: {
-      title: '笔记路由背景模板'
-    },
-    component: () => import('../views/Notes.vue'),
-    // children: [
-    //   {
-    //     path: '/notes/javaScript',
-    //     meta: {
-    //       title: '笔记-javaScript'
-    //     },
-    //     component: () => import('../components/notesTemplate/javaScript.vue')
-    //   },
-    //   {
-    //     path: '/notes/jQuery',
-    //     meta: {
-    //       title: '笔记-jQuery'
-    //     },
-    //     component: () => import('../components/notesTemplate/jQuery.vue')
-    //   },
-    //   {
-    //     path: '/notes/vue',
-    //     meta: {
-    //       title: '笔记-vue'
-    //     },
-    //     component: () => import('../components/notesTemplate/vue.vue')
-    //   },
-    //   {
-    //     path: '/notes/miniProgram',
-    //     meta: {
-    //       title: '笔记-小程序'
-    //     },
-    //     component: () => import('../components/notesTemplate/miniProgram.vue')
-    //   },
-    //   {
-    //     path: '/music',
-    //     meta: {
-    //       title: '笔记-deepseek和我一起做的音乐播放器'
-    //     },
-    //     component: () => import('../views/u148/music.vue')
-    //   },
-    //   {
-    //     path: '/notes/test',
-    //     meta: {
-    //       title: '笔记-代码测试'
-    //     },
-    //     component: () => import('../components/notesTemplate/test.vue')
-    //   },
-    //   {
-    //     path: '/notes/networkfile',
-    //     meta: {
-    //       title: '笔记-networkfile'
-    //     },
-    //     component: () => import('../components/notesTemplate/networkfile.vue')
-    //   },
-    // ]
+    path: '/notes',
+    name: 'NoteList',
+    meta: { title: '笔记' },
+    component: () => import('../views/NoteView.vue')
   },
+  {
+    path: '/photos',
+    name: 'PhotoWall',
+    meta: { title: '照片墙' },
+    component: () => import('../views/photoWall/index.vue')
+  },
+  {
+    path: '/about',
+    name: 'AboutMe',
+    meta: { title: '关于我' },
+    component: () => import('../views/About.vue')
+  },
+  {
+    path: '/404',
+    name: 'NotFound',
+    meta: { title: '404' },
+    component: () => import('../views/404.vue')
+  },
+
   {
     path: '/plans',
     name: 'Plans',
@@ -81,14 +65,7 @@ const routes = [
     },
     component: () => import('../views/plans/21Plans.vue')
   },
-  {
-    path: '/photoWall',
-    name: 'photoWall',
-    meta: {
-      title: '照片墙'
-    },
-    component: () => import('../views/photoWall/index.vue')
-  },
+
   {
     path: '/decorationBreak',
     name: 'decorationBreak',
@@ -105,14 +82,7 @@ const routes = [
     },
     component: () => import('../views/others/starrySky.vue')
   },
-  {
-    path: '/about',
-    name: 'About',
-    meta: {
-      title: '关于我'
-    },
-    component: () => import('../views/About.vue')
-  },
+
   {
     path: '/coin',
     name: 'coin',
@@ -165,21 +135,16 @@ const routes = [
     path: '/deepseek',
     name: 'deepseek',
     component: () => import('../views/u148/deepseek.vue')
-  },
-  {
-    path: '/404',
-    name: 'NotFound',
-    component: () => import('../views/404.vue')
-  },
-];
+  }
+]
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
-  routes,
+  routes
 })
 
 // 创建路由名称映射，方便检查路由是否存在
-const routePathMap = new Set(routes.map(route => route.path))
+const routePathMap = new Set(routes.map((route) => route.path))
 console.log(routePathMap, 'routePathMap')
 
 /**
@@ -193,15 +158,14 @@ const isRouteExists = (path) => {
     const resolved = router.resolve(path)
 
     // 检查是否匹配到路由且不是通配符路由
-    return resolved.matched.length > 0 &&
-      !resolved.matched.some(route =>
-        route.path.includes('*') || route.name === 'NotFound'
-      )
+    return (
+      resolved.matched.length > 0 &&
+      !resolved.matched.some((route) => route.path.includes('*') || route.name === 'NotFound')
+    )
   } catch (error) {
     return false
   }
 }
-
 
 /**
  * 全局前置守卫
@@ -242,7 +206,7 @@ router.beforeEach((to, from, next) => {
  * 路由跳转完成后执行
  */
 // router.afterEach((to, from) => {
-//   // 可以在这里进行页面统计、埋点等  
+//   // 可以在这里进行页面统计、埋点等
 //   // 发送页面浏览事件到分析平台
 //   if (window.gtag) {
 //     window.gtag('event', 'page_view', {
