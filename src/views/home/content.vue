@@ -127,7 +127,7 @@ export default {
                 width: 150px;
                 height: 150px;
                 content: '';
-                background-image: url('../../assets/miniprogram.jpg');
+                background-image: url('../../assets/miniprogram.png');
                 background-size: contain;
                 background-repeat: no-repeat;
                 top: 130px;

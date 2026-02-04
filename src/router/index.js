@@ -145,57 +145,22 @@ const routePathMap = new Set(routes.map((route) => route.path))
 console.log(routePathMap, 'routePathMap')
 
 /**
- * 检查路由是否存在
- * @param {string} path - 目标路径
- * @returns {boolean}
- */
-const isRouteExists = (path) => {
-  try {
-    // 使用router.resolve进行路由匹配
-    const resolved = router.resolve(path)
-
-    // 检查是否匹配到路由且不是通配符路由
-    return (
-      resolved.matched.length > 0 &&
-      !resolved.matched.some((route) => route.path.includes('*') || route.name === 'NotFound')
-    )
-  } catch (error) {
-    return false
-  }
-}
-
-/**
  * 全局前置守卫
  * 在路由跳转前执行
  */
 router.beforeEach((to, from, next) => {
   console.log(`路由跳转: ${from.path} -> ${to.path}`)
 
-  // 1. 检查是否已经是404页面
-  if (to.name === 'NotFound') {
-    next()
-    return
-  }
-
-  // 2. 检查路由是否存在
-  if (!isRouteExists(to.path)) {
+  if (to.matched.length === 0) {
     console.warn(`路由不存在: ${to.path}，跳转到404页面`)
-
-    // 保存原始路径到query参数，方便在404页面显示
-    const redirectData = {
+    next({
       path: '/404',
-      query: {
-        originalPath: to.fullPath,
-        timestamp: Date.now()
-      },
-      replace: true // 使用replace而不是push，避免浏览器历史记录中出现无效路由
-    }
-
-    next(redirectData)
-    return
+      query: { originalPath: to.fullPath, timestamp: Date.now() },
+      replace: true
+    })
+  } else {
+    next()
   }
-
-  next()
 })
 
 /**
