@@ -48,12 +48,12 @@ const topRoutes = [
     component: () => import('../views/plans/21Plans.vue')
   },
   {
-    path: '/roadMap',
-    name: 'roadMap',
+    path: '/roadReplay',
+    name: 'roadReplay',
     meta: {
-      title: '路径图'
+      title: '轨迹回放'
     },
-    component: () => import('../views/plans/roadMap.vue')
+    component: () => import('../views/plans/roadReplay.vue')
   },
 ]
 
