@@ -134,7 +134,8 @@ export default {
                 right: 100%;
             }
 
-            &:hover::after {
+            /**
+            * &:hover::after {
                 top: 130px;
                 right: 0px;
                 transform: translateX(-50%);
@@ -142,6 +143,7 @@ export default {
                 transition: all 0.2s ease-in-out;
                 z-index: 10;
             }
+            */
 
             #myName {
                 height: 8rem;

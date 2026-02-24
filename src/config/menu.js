@@ -22,6 +22,7 @@ const toolsMenuList = [
 const u148MenuList = [
     { id:1,text:"deepseek",path:"/u148/deepseek"},
     { id:2,text:"舔狗日记",path:"/u148/dog"},
+    { id:3,text:"千里打工记",path:"/u148/roadReplay"},
 ]
 
 const quickLinksList = [

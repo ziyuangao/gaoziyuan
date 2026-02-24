@@ -47,14 +47,6 @@ const topRoutes = [
     },
     component: () => import('../views/plans/21Plans.vue')
   },
-  {
-    path: '/roadReplay',
-    name: 'roadReplay',
-    meta: {
-      title: '轨迹回放'
-    },
-    component: () => import('../views/plans/roadReplay.vue')
-  },
 ]
 
 // 工具路由
@@ -104,7 +96,15 @@ const u148Routes = [
     path: '/u148/deepseek',
     name: 'deepseek',
     component: () => import('../views/u148/deepseek.vue')
-  }
+  },
+  {
+    path: '/u148/roadReplay',
+    name: 'roadReplay',
+    meta: {
+      title: '轨迹回放'
+    },
+    component: () => import('../views/u148/roadReplay.vue')
+  },
 ]
 // 快速链接路由
 const quickLinksRoutes = [

@@ -67,7 +67,7 @@ const points = [
     name: '上海·华康佳苑',
     value: [121.680, 31.270],
     info: '26/02/21 18:30 到达',
-    event: '🏁 终点 · 累计行驶 1000km · 总耗时25h',
+    event: '🏁 终点 · 累计行驶 994km · 总耗时25h',
     type: 'end'
   }
 ];
