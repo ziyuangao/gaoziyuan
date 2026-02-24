@@ -47,6 +47,14 @@ const topRoutes = [
     },
     component: () => import('../views/plans/21Plans.vue')
   },
+  {
+    path: '/roadMap',
+    name: 'roadMap',
+    meta: {
+      title: '路径图'
+    },
+    component: () => import('../views/plans/roadMap.vue')
+  },
 ]
 
 // 工具路由
