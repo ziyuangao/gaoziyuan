@@ -10,9 +10,11 @@
 
 <script setup>
 import RoadReplay from './components/TrackPlayback.vue';
+import { useUserStore } from '@/stores/userStore'
+const userStore = useUserStore()
 
-const apiKey = import.meta.env.VITE_AMAP_API_KEY;
-const encKey = import.meta.env.VITE_AMAP_API_ENC_KEY;
+const apiKey = userStore.GAODE_KEY;
+const encKey = userStore.GAODE_ENCKEY;
 const points = [
   {
     name: '南阳·车站北路和谐小区',
@@ -71,6 +73,7 @@ const points = [
     type: 'end'
   }
 ];
+
 </script>
 
 <style scoped>

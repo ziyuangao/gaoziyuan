@@ -2,7 +2,9 @@ import { createApp } from 'vue';
 import ElementPlus from 'element-plus';
 import App from './App.vue';
 import router from './router';
-const app = createApp(App).use(router).use(ElementPlus,{size:'small'});
+import { createPinia } from 'pinia'
+const pinia = createPinia()
+const app = createApp(App).use(router).use(ElementPlus,{size:'small'}).use(pinia);
 import './assets/main.css'
 import 'element-plus/dist/index.css'
 import myDirectives  from './directives';
