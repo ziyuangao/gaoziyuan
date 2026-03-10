@@ -5,6 +5,7 @@ export const useUserStore = defineStore('user', {
   state: () => ({
     GAODE_KEY:'',
     GAODE_ENCKEY:'',
+    DEEPSEEK_ENCKEY:'',
   }),
 
   // 计算属性
@@ -19,6 +20,9 @@ export const useUserStore = defineStore('user', {
     },
     SETGAODEENCKEY(key){
       this.GAODE_ENCKEY = key;
+    },
+    SETDEEPSEEKKEY(key){
+      this.DEEPSEEK_ENCKEY = key;
     },
     // 切换主题
     toggleTheme() {

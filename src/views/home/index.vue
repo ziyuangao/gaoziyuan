@@ -18,7 +18,7 @@ import menuList from '@/components/common/menuList.vue';
 import homeContent from './content.vue';
 import homeFooter from './footer.vue';
 
-onMounted(()=>{7
+onMounted(()=>{
   // 如果pinia中存在 gaode key 不请求
   if(userStore.GAODE_KEY && userStore.GAODE_ENCKEY){
     return
@@ -29,6 +29,7 @@ onMounted(()=>{7
       // 是否允许获取高德地图key
       const includeGaode = res.data.supportedTypes.includes('gaode');
       const includeGaodeenc = res.data.supportedTypes.includes('gaodeenc');
+      const includeDeekseek = res.data.supportedTypes.includes('deepseek');
       if(includeGaode){
         axios.post('https://gaoziyuan.netlify.app/.netlify/functions/getkey',{type:'gaode'}).then(res=>{
           userStore.SETGAODEKEY(res.data)
@@ -37,6 +38,12 @@ onMounted(()=>{7
       if(includeGaodeenc){
         axios.post('https://gaoziyuan.netlify.app/.netlify/functions/getkey',{type:'gaodeenc'}).then(res=>{
           userStore.SETGAODEENCKEY(res.data)
+        })
+      }
+      if(includeDeekseek){
+        axios.post('https://gaoziyuan.netlify.app/.netlify/functions/getkey',{type:'deepseek'}).then(res=>{
+        // axios.post('http://localhost:8888/.netlify/functions/getkey',{type:'deepseek'}).then(res=>{
+          userStore.SETDEEPSEEKKEY(res.data)
         })
       }
     })

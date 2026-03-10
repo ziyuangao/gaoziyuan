@@ -14,12 +14,14 @@
 import OpenAI from "openai";
 import { ref } from "vue";
 import { Search } from '@element-plus/icons-vue'
+import { useUserStore } from '@/stores/userStore'
+const userStore = useUserStore()
 
 const userInput = ref('')
 
 const openai = new OpenAI({
     baseURL: 'https://api.deepseek.com',
-    apiKey: 'sk-af8a689fbaf741e985288d782dce3f46',
+    apiKey: userStore.DEEPSEEK_ENCKEY,
     dangerouslyAllowBrowser:true,
 });
 
