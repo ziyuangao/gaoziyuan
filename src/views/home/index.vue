@@ -29,7 +29,7 @@ onMounted(()=>{
       // 是否允许获取高德地图key
       const includeGaode = res.data.supportedTypes.includes('gaode');
       const includeGaodeenc = res.data.supportedTypes.includes('gaodeenc');
-      const includeDeekseek = res.data.supportedTypes.includes('deepseek');
+      // const includeDeekseek = res.data.supportedTypes.includes('deepseek');
       if(includeGaode){
         axios.post('https://gaoziyuan.netlify.app/.netlify/functions/getkey',{type:'gaode'}).then(res=>{
           userStore.SETGAODEKEY(res.data)
@@ -40,12 +40,12 @@ onMounted(()=>{
           userStore.SETGAODEENCKEY(res.data)
         })
       }
-      if(includeDeekseek){
-        axios.post('https://gaoziyuan.netlify.app/.netlify/functions/getkey',{type:'deepseek'}).then(res=>{
-        // axios.post('http://localhost:8888/.netlify/functions/getkey',{type:'deepseek'}).then(res=>{
-          userStore.SETDEEPSEEKKEY(res.data)
-        })
-      }
+      // if(includeDeekseek){
+      //   axios.post('https://gaoziyuan.netlify.app/.netlify/functions/getkey',{type:'deepseek'}).then(res=>{
+      //   // axios.post('http://localhost:8888/.netlify/functions/getkey',{type:'deepseek'}).then(res=>{
+      //     userStore.SETDEEPSEEKKEY(res.data)
+      //   })
+      // }
     })
   }
 })

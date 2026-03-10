@@ -74,6 +74,10 @@ import axios from 'axios'
 import { marked } from 'marked' // 用于渲染markdown
 import DOMPurify from 'dompurify' // 用于安全HTML渲染
 
+defineOptions({
+    name: 'deepseek-chat'
+})
+
 // 状态管理
 const userInput = ref('')
 const result = ref('')
@@ -164,7 +168,8 @@ const handleClick = async () => {
     
     console.log('发送参数:', params)
     
-    const response = await axios.post('http://localhost:8888/.netlify/functions/deepseek', params)
+    // const response = await axios.post('http://localhost:8888/.netlify/functions/deepseek', params)
+    const response = await axios.post('https://gaoziyuan.netlify.app/.netlify/functions/deepseek', params)
     
     if (response.data.success) {
       // 添加AI回复到消息列表
