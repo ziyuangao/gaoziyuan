@@ -6,9 +6,9 @@
 </template>
 
 <script setup>
-import axios from 'axios';
 import { onMounted } from 'vue';
 import { useUserStore } from '@/stores/userStore'
+import { getMyKey } from '@/api/request';
 const userStore = useUserStore()
 defineOptions({
   name: 'HomeIndex'
@@ -23,29 +23,11 @@ onMounted(()=>{
   if(userStore.GAODE_KEY && userStore.GAODE_ENCKEY){
     return
   } else {
-    // 获取可以读取的apikey有哪些
-    axios.get('https://gaoziyuan.netlify.app/.netlify/functions/gettypes').then(res=>{
-    // axios.get('http://localhost:8888/.netlify/functions/gettypes').then(res=>{
-      // 是否允许获取高德地图key
-      const includeGaode = res.data.supportedTypes.includes('gaode');
-      const includeGaodeenc = res.data.supportedTypes.includes('gaodeenc');
-      // const includeDeekseek = res.data.supportedTypes.includes('deepseek');
-      if(includeGaode){
-        axios.post('https://gaoziyuan.netlify.app/.netlify/functions/getkey',{type:'gaode'}).then(res=>{
-          userStore.SETGAODEKEY(res.data)
-        })
-      }
-      if(includeGaodeenc){
-        axios.post('https://gaoziyuan.netlify.app/.netlify/functions/getkey',{type:'gaodeenc'}).then(res=>{
-          userStore.SETGAODEENCKEY(res.data)
-        })
-      }
-      // if(includeDeekseek){
-      //   axios.post('https://gaoziyuan.netlify.app/.netlify/functions/getkey',{type:'deepseek'}).then(res=>{
-      //   // axios.post('http://localhost:8888/.netlify/functions/getkey',{type:'deepseek'}).then(res=>{
-      //     userStore.SETDEEPSEEKKEY(res.data)
-      //   })
-      // }
+    getMyKey({type:'gaode'}).then(res=>{
+      userStore.SETGAODEKEY(res.data)
+    })
+    getMyKey({type:'gaodeenc'}).then(res=>{
+      userStore.SETGAODEKEY(res.data)
     })
   }
 })

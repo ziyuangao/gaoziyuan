@@ -1,7 +1,7 @@
 <template>
 <div class="common-layout">
     <el-container>
-        <el-header>LOL英雄查询 version {{heroData.version}}-合计英雄{{ heroData.hero.length }}位-更新时间{{ heroData.fileTime }}</el-header>
+        <el-header>LOL英雄查询 version {{heroData.version}}-合计英雄{{ heroData.hero && heroData.hero.length }}位-更新时间{{ heroData.fileTime }}</el-header>
         <el-container>
             <el-aside class="aside-left">
                 <div class="aside-input"><el-input v-model="keyword" placeholder="关键词" clearable /></div>
@@ -40,6 +40,7 @@
 
 <script setup>
 import { ref,computed,onMounted,reactive } from 'vue';
+import { getLOLHeroList } from '@/api/request';
 let heroData = reactive({});
 const dataPool = computed(() => {
     // 默认情况
@@ -93,13 +94,8 @@ const randomHero = ()=>{
         }
     }
 }
-const getHeroData = async ()=>{
-    await fetch("https://game.gtimg.cn/images/lol/act/img/js/heroList/hero_list.js").then(res=>{
-        if (!res.ok) {
-            throw new Error('网络响应不正常');
-        }
-        return res.json();
-    }).then(res=>{
+const getHeroData = ()=>{
+    getLOLHeroList().then(res=>{
         Object.assign(heroData,res)
     })
     .catch(()=>{

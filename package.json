@@ -5,8 +5,8 @@
   "author": "<ziyuan_gao@163.com>",
   "private": true,
   "scripts": {
-    "dev": "vite --open",
-    "build": "vite build",
+    "dev": "vite --open --mode development",
+    "build": "vite build --mode production",
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "format": "prettier --write src/"

@@ -70,7 +70,7 @@
 <script setup>
 import { ref, computed, watch, nextTick } from "vue";
 import { Search, Plus, User, Avatar } from '@element-plus/icons-vue'
-import axios from 'axios'
+import { talkToDeepseek } from '@/api/request';
 import { marked } from 'marked' // 用于渲染markdown
 import DOMPurify from 'dompurify' // 用于安全HTML渲染
 
@@ -168,26 +168,24 @@ const handleClick = async () => {
     
     console.log('发送参数:', params)
     
-    // const response = await axios.post('http://localhost:8888/.netlify/functions/deepseek', params)
-    const response = await axios.post('https://gaoziyuan.netlify.app/.netlify/functions/deepseek', params)
-    
-    if (response.data.success) {
+    const response = await talkToDeepseek(params)
+    if (response.success) {
       // 添加AI回复到消息列表
       messages.value.push({
         role: "assistant",
-        content: response.data.message
+        content: response.message
       })
       
       // 如果后端返回了完整的对话历史，可以用它来替换（可选）
-      if (response.data.conversation) {
+      if (response.conversation) {
         // 可以选择更新整个对话历史，但要注意保留system消息
-        console.log('后端返回的完整对话:', response.data.conversation)
+        console.log('后端返回的完整对话:', response.conversation)
       }
     } else {
       // 处理错误
       messages.value.push({
         role: "assistant",
-        content: `错误：${response.data.error || '未知错误'}`
+        content: `错误：${response.error || '未知错误'}`
       })
     }
   } catch (error) {

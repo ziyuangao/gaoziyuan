@@ -35,12 +35,11 @@ import dogImg3 from '@/assets/u148/dog-3.jpg'
 import dogImg4 from '@/assets/u148/dog-4.jpg'
 import { ossUrl,u148Folder } from '../../config/resources'
 import dayjs from 'dayjs'
-import simpleApi from '@/api/fetch.js';
-// fetch对象
-var requestOptions = {
-  method: 'GET',
-  redirect: 'follow'
-}
+import { getDogTextInfo } from '@/api/request'
+
+defineOptions({
+    name: 'loveDog'
+})
 
 const canvas = ref(null);//创建canvas对象
 const ctx = ref(null);//导出出canvas对象
@@ -59,7 +58,7 @@ const dogText = ref('')
 
 // 获取舔狗文案
 const getDogText = () => {
-  simpleApi.get("https://v2.xxapi.cn/api/dog",requestOptions).then(res=>{
+  getDogTextInfo().then(res=>{
     const result = res.data;
     dogText.value = `${today},${result}`
   })
