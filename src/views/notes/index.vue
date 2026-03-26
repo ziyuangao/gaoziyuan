@@ -47,6 +47,11 @@ const fileTypeConfig = {
 }
 let networkFile = [
 	{
+		title: '小说《月牙》',
+		url: 'https://docs.qq.com/s/GauQ080z06csdrO8b8J4dq',
+		fileType: 'other'
+	},
+	{
 		title: '饮食记录',
 		url: 'https://docs.qq.com/sheet/DSGtqTm1SaFhXRGti',
 		fileType: 'sheet'
