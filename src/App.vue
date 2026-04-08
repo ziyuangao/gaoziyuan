@@ -4,12 +4,12 @@
 
 <script>
 export default {
-  data(){
+  data() {
     return {
-      model:[]
+      model: []
     }
   },
-  mounted(){
+  mounted() {
   }
 }
 </script>
