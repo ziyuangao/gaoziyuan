@@ -29,7 +29,9 @@ const quickLinksList = [
   { id: 1, text: '滑动进入', path: '/links/slidein' },
   { id: 2, text: '星空背景', path: '/links/starrySky' },
   { id: 3, text: '转动地球', path: '/links/rotateTheEarth' },
-  { id: 4, text: '项目介绍', path: '/links/projectIntroduction' }
+  { id: 4, text: '项目介绍', path: '/links/projectIntroduction' },
+  { id: 5, text: '后端服务', path: '/links/backedService' },
+  { id: 6, text: '小程序介绍', path: '/links/miniProgramIntroduction' }
 ]
 
 export { homeMenuList, noteMenuList, u148MenuList, toolsMenuList, quickLinksList }

@@ -147,6 +147,22 @@ const quickLinksRoutes = [
       title: '项目介绍'
     },
     component: () => import('../views/links/projectIntroduction.vue')
+  },
+  {
+    path: '/links/miniProgramIntroduction',
+    name: 'miniProgramIntroduction',
+    meta: {
+      title: '小程序介绍'
+    },
+    component: () => import('../views/links/miniProgramIntroduction.vue')
+  },
+  {
+    path: '/links/backedService',
+    name: 'backedService',
+    meta: {
+      title: '后端服务'
+    },
+    component: () => import('../views/links/backedService.vue')
   }
 ]
 
