@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
-let routes = [];//全部路由
+let routes = [] //全部路由
 // 顶层路由
 const topRoutes = [
   {
@@ -38,7 +38,7 @@ const topRoutes = [
     meta: { title: '404' },
     component: () => import('../views/404/index.vue')
   },
-  
+
   {
     path: '/plans',
     name: 'Plans',
@@ -46,7 +46,7 @@ const topRoutes = [
       title: '我的计划'
     },
     component: () => import('../views/plans/21Plans.vue')
-  },
+  }
 ]
 
 // 工具路由
@@ -80,7 +80,7 @@ const toolsRoutes = [
       title: '随机名字生成器'
     },
     component: () => import('../views/tools/randomName.vue')
-  },
+  }
 ]
 // u148路由
 const u148Routes = [
@@ -104,7 +104,7 @@ const u148Routes = [
       title: '轨迹回放'
     },
     component: () => import('../views/u148/roadReplay.vue')
-  },
+  }
 ]
 // 快速链接路由
 const quickLinksRoutes = [
@@ -140,6 +140,14 @@ const quickLinksRoutes = [
     },
     component: () => import('../views/links/slideIn.vue')
   },
+  {
+    path: '/links/projectIntroduction',
+    name: 'projectIntroduction',
+    meta: {
+      title: '项目介绍'
+    },
+    component: () => import('../views/links/projectIntroduction.vue')
+  }
 ]
 
 routes = [...topRoutes, ...toolsRoutes, ...u148Routes, ...quickLinksRoutes]
