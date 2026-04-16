@@ -38,7 +38,22 @@ const topRoutes = [
     meta: { title: '404' },
     component: () => import('../views/404/index.vue')
   },
-
+  {
+    path: '/login',
+    name: 'Login',
+    meta: {
+      title: '登录'
+    },
+    component: () => import('../views/login/index.vue')
+  },
+  {
+    path: '/signUp',
+    name: 'SignUp',
+    meta: {
+      title: '注册'
+    },
+    component: () => import('../views/sign_up/index.vue')
+  },
   {
     path: '/plans',
     name: 'Plans',
@@ -104,6 +119,14 @@ const u148Routes = [
       title: '轨迹回放'
     },
     component: () => import('../views/u148/roadReplay.vue')
+  },
+  {
+    path: '/u148/messageBoard',
+    name: 'messageBoard',
+    meta: {
+      title: '留言板'
+    },
+    component: () => import('../views/u148/messageBoard.vue')
   }
 ]
 // 快速链接路由

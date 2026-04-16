@@ -1,6 +1,5 @@
 # Small Note
 
-
 ![CI/CD](https://github.com/ziyuangao/gaoziyuan/actions/workflows/ci.yml/badge.svg)
 
 # 个人网站
@@ -8,6 +7,14 @@
 这是我的个人介绍网站。
 
 一个基于 Vue 3 + Vite 的前端练手项目，用于记录和管理笔记。
+
+# 使用了第三方代码
+
+本项目登录页面采用 [animated-characters-login-page]
+来源 https://github.com/a97242689/animated-characters-login-page
+协议: MIT License
+作者: [a97242689]
+如涉及版权问题，请联系 ziyuan_gao@163.com 处理
 
 ## 技术栈
 
@@ -36,7 +43,7 @@
 
 ├── .vscode/ # VS Code 配置
 ├── assets/ # 静态资源
-├── docs/ # gitpage展示内容
+├── docs/ # gitpage 展示内容
 ├── src/ # 源代码
 │ ├── components/ # 组件
 │ ├── views/ # 页面

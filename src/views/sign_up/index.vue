@@ -1,0 +1,122 @@
+<template>
+    <el-dialog v-model="dialogVisible" width="500px" center :before-close="handleDialogClose">
+        <el-form ref="formRef" label-width="120" :model="form" :rules="rules" class="sign-up-form" size="large">
+            <el-form-item label="邮箱" prop="email">
+                <el-input v-model="form.email" placeholder="请输入邮箱" type="email" />
+            </el-form-item>
+            <el-form-item label="密码" prop="password">
+                <el-input v-model="form.password" placeholder="请输入密码" type="password" />
+            </el-form-item>
+            <el-form-item label="确认密码" prop="confirmPassword">
+                <el-input v-model="form.confirmPassword" placeholder="请确认密码" type="password" />
+            </el-form-item>
+        </el-form>
+        <template #footer>
+            <el-button type="primary" @click="submitForm(formRef)" size="large">注册</el-button>
+        </template>
+    </el-dialog>
+</template>
+
+<script setup>
+import { reactive, ref, computed } from 'vue';
+import { ElMessage } from 'element-plus'
+defineOptions({
+    name: 'SignUp'
+})
+
+const props = defineProps({
+    signVisible: {
+        type: Boolean,
+        default: false
+    }
+})
+
+const emit = defineEmits(['close', 'update:signVisible'])
+
+// 创建一个计算属性来处理对话框的显示状态
+const dialogVisible = computed({
+    get: () => props.signVisible,
+    set: (value) => {
+        if (!value) {
+            // 当对话框关闭时，触发事件更新父组件的状态
+            emit('update:signVisible', value)
+            emit('close')
+        }
+    }
+})
+
+const formRef = ref()
+
+const handleDialogClose = (done) => {
+    // 清空表单校验
+    formRef.value.resetFields()
+    // 关闭对话框
+    dialogVisible.value = false
+    done()
+}
+
+const form = reactive({
+    email: "",
+    password: "",
+    confirmPassword: ""
+});
+
+const rules = reactive({
+    email: [
+        { required: true, message: '请输入邮箱', trigger: 'blur' },
+        { type: 'email', message: '请输入正确的邮箱', trigger: ['blur', 'change'] }
+    ],
+    password: [
+        { required: true, message: '请输入密码', trigger: 'blur' },
+        { min: 6, message: '密码长度不能小于6位', trigger: 'blur' }
+    ],
+    confirmPassword: [
+        { required: true, message: '请确认密码', trigger: 'blur' },
+        {
+            validator: (rule, value, callback) => {
+                if (value !== form.password) {
+                    callback(new Error('两次输入的密码不一致'));
+                } else {
+                    callback();
+                }
+            },
+            trigger: 'blur'
+        }
+    ]
+})
+
+const submitForm = async (formEl) => {
+    if (!formEl) return
+    await formEl.validate((valid) => {
+        if (valid) {
+            // 发送请求
+            alert('注册成功！');
+            // 注册成功后关闭对话框
+            dialogVisible.value = false
+        } else {
+            // 使用 Element Plus 的 message
+            ElMessage.error('请检查输入信息是否正确');
+            return false;
+        }
+    })
+}
+</script>
+
+<style scoped>
+.sign-up-box {
+    z-index: 999;
+    position: fixed;
+    inset: 0;
+    background: rgba(233, 233, 233, 0.8);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sign-up-form {
+    width: 400px;
+    margin: auto;
+}
+</style>
