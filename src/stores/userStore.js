@@ -3,9 +3,10 @@ import { defineStore } from 'pinia'
 export const useUserStore = defineStore('user', {
   // 状态
   state: () => ({
-    GAODE_KEY:'',
-    GAODE_ENCKEY:'',
-    DEEPSEEK_ENCKEY:'',
+    GAODE_KEY: '',
+    GAODE_ENCKEY: '',
+    DEEPSEEK_ENCKEY: '',
+    USER_INFO: {}
   }),
 
   // 计算属性
@@ -15,14 +16,17 @@ export const useUserStore = defineStore('user', {
 
   // 方法/动作
   actions: {
-    SETGAODEKEY(key){
-      this.GAODE_KEY = key;
+    SETUSERINFO(info) {
+      this.USER_INFO = info
     },
-    SETGAODEENCKEY(key){
-      this.GAODE_ENCKEY = key;
+    SETGAODEKEY(key) {
+      this.GAODE_KEY = key
     },
-    SETDEEPSEEKKEY(key){
-      this.DEEPSEEK_ENCKEY = key;
+    SETGAODEENCKEY(key) {
+      this.GAODE_ENCKEY = key
+    },
+    SETDEEPSEEKKEY(key) {
+      this.DEEPSEEK_ENCKEY = key
     },
     // 切换主题
     toggleTheme() {

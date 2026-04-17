@@ -12,7 +12,10 @@
             </el-form-item>
         </el-form>
         <template #footer>
-            <el-button type="primary" @click="submitForm(formRef)" size="large">注册</el-button>
+            <el-button type="primary" @click="submitForm(formRef)" size="large" :loading="submitLoading"
+                :disabled="submitLoading">
+                注册
+            </el-button>
         </template>
     </el-dialog>
 </template>
@@ -20,6 +23,8 @@
 <script setup>
 import { reactive, ref, computed } from 'vue';
 import { ElMessage } from 'element-plus'
+import { registerUser } from '@/api/request';
+
 defineOptions({
     name: 'SignUp'
 })
@@ -32,6 +37,9 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['close', 'update:signVisible'])
+
+// 提交按钮的 loading 状态
+const submitLoading = ref(false)
 
 // 创建一个计算属性来处理对话框的显示状态
 const dialogVisible = computed({
@@ -49,7 +57,7 @@ const formRef = ref()
 
 const handleDialogClose = (done) => {
     // 清空表单校验
-    formRef.value.resetFields()
+    formRef.value?.resetFields()
     // 关闭对话框
     dialogVisible.value = false
     done()
@@ -87,12 +95,30 @@ const rules = reactive({
 
 const submitForm = async (formEl) => {
     if (!formEl) return
+
+    // 防止重复提交：如果已经在提交中，直接返回
+    if (submitLoading.value) return
+
     await formEl.validate((valid) => {
         if (valid) {
+            // 开启 loading
+            submitLoading.value = true
+
             // 发送请求
-            alert('注册成功！');
-            // 注册成功后关闭对话框
-            dialogVisible.value = false
+            registerUser({ ...form }).then(res => {
+                // 注册成功后关闭对话框
+                if (res.success) {
+                    ElMessage.success('注册成功')
+                    dialogVisible.value = false
+                    // 清空表单
+                    formEl.resetFields()
+                }
+            }).catch(err => {
+                ElMessage.error(err.response?.data?.error || '注册失败，请稍后重试');
+            }).finally(() => {
+                // 无论成功还是失败，都要关闭 loading
+                submitLoading.value = false
+            })
         } else {
             // 使用 Element Plus 的 message
             ElMessage.error('请检查输入信息是否正确');

@@ -25,12 +25,6 @@
         <!-- Right Login Section -->
         <div class="right-section">
             <div class="form-wrapper">
-                <!-- Mobile Logo -->
-                <div class="mobile-logo">
-                    <img src="https://i.postimg.cc/nLrDYrHW/icon.png" alt="CareerCompass logo" class="logo-image" />
-                    <span>CareerCompass</span>
-                </div>
-
                 <!-- Header -->
                 <div class="form-header">
                     <h1 class="form-title">欢迎回来~</h1>
@@ -105,13 +99,16 @@
 import { ref } from 'vue'
 import AnimatedCharacters from './AnimatedCharacters.vue'
 import Signup from '../sign_up/index.vue'
+import { loginUser } from '@/api/request'
+import { useUserStore } from '@/stores/userStore'
+import { ElMessage } from 'element-plus'
+import { useRouter } from 'vue-router'
 defineOptions({
     name: 'LoginPage'
 })
-
+const router = useRouter()
 const email = ref('')
 const password = ref('')
-const rememberMe = ref(false)
 const showPassword = ref(false)
 const isTyping = ref(false)
 const isLoading = ref(false)
@@ -122,6 +119,7 @@ const errors = ref({
     email: '',
     password: ''
 })
+const userStore = useUserStore()
 const signVisible = ref(false)
 
 const validateForm = () => {
@@ -154,29 +152,37 @@ const changeSignVisible = () => {
 
 const handleSubmit = async () => {
     if (!validateForm()) return
-
+    // 开始loading状态，重置错误信息和登录状态
     isLoading.value = true
+    // 错误信息和登录状态重置
     errorMessage.value = ''
     loginFailed.value = false
     loginSuccess.value = false
 
     try {
-        await new Promise(resolve => setTimeout(resolve, 1500))
-        console.log('Login:', { email: email.value, password: password.value, rememberMe: rememberMe.value })
-        if (email.value === '111@qq.com') {
+        const loginResult = await loginUser({ email: email.value, password: password.value })
+        if (loginResult.success && loginResult.data) {
             loginSuccess.value = true
-            setTimeout(() => {
-                loginSuccess.value = false
-            }, 6000)
-        } else {
-            throw new Error('Invalid credentials')
+            // 会话存储保存token请求留言板接口需要使用
+            sessionStorage.setItem('token', loginResult.data.token)
+            // 保存用户名 提交留言板接口需要使用
+            userStore.SETUSERINFO(loginResult.data.user)
+            ElMessage.success({
+                message: '登录成功',
+                duration: 2000,
+                onClose: () => {
+                    // 登录成功后关闭对话框
+                    router.go(-1)
+                }
+            })
         }
     } catch (error) {
-        errorMessage.value = 'Invalid email or password. Please try again.'
+        errorMessage.value = error.response?.data?.error || '登录失败，请稍后重试'
         loginFailed.value = true
         setTimeout(() => {
+            // 登录失败，3秒后重置登录失败状态
             loginFailed.value = false
-        }, 3000)
+        }, 3000);
     } finally {
         isLoading.value = false
     }
