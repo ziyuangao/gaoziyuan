@@ -1,20 +1,35 @@
 <template>
-    <el-dialog v-model="dialogVisible" width="500px" center :before-close="handleDialogClose">
-        <el-form ref="formRef" label-width="120" :model="form" :rules="rules" class="sign-up-form" size="large">
-            <el-form-item label="邮箱" prop="email">
-                <el-input v-model="form.email" placeholder="请输入邮箱" type="email" />
-            </el-form-item>
-            <el-form-item label="密码" prop="password">
-                <el-input v-model="form.password" placeholder="请输入密码" type="password" />
-            </el-form-item>
-            <el-form-item label="确认密码" prop="confirmPassword">
-                <el-input v-model="form.confirmPassword" placeholder="请确认密码" type="password" />
-            </el-form-item>
-        </el-form>
+    <el-dialog v-model="dialogVisible" width="900px" center :show-close="false">
+        <el-row justify="space-between">
+            <el-col :span="12">
+                <el-form ref="formRef" label-width="100" :model="form" :rules="rules" class="sign-up-form" size="large">
+                    <el-form-item label="邮箱" prop="email">
+                        <el-input v-model="form.email" placeholder="请输入邮箱" type="email" />
+                    </el-form-item>
+                    <el-form-item label="密码" prop="password">
+                        <el-input v-model="form.password" placeholder="请输入密码" type="password" />
+                    </el-form-item>
+                    <el-form-item label="确认密码" prop="confirmPassword">
+                        <el-input v-model="form.confirmPassword" placeholder="请确认密码" type="password" />
+                    </el-form-item>
+                </el-form>
+            </el-col>
+            <el-col :span="12">
+                <el-card header="重要提示">
+                    <div>账号仅用于留言板，不验证邮箱，不提供密码找回。</div>
+                    <div>密码经过加密存储，遗忘请重新注册。</div>
+                    <div>我们只审核留言内容是否合法、合规。</div>
+                    <div>请勿使用你在其他重要网站的相同密码。</div>
+                </el-card>
+            </el-col>
+        </el-row>
         <template #footer>
             <el-button type="primary" @click="submitForm(formRef)" size="large" :loading="submitLoading"
                 :disabled="submitLoading">
                 注册
+            </el-button>
+            <el-button type="primary" @click="handleDialogClose" size="large">
+                关闭
             </el-button>
         </template>
     </el-dialog>
@@ -55,12 +70,11 @@ const dialogVisible = computed({
 
 const formRef = ref()
 
-const handleDialogClose = (done) => {
+const handleDialogClose = () => {
     // 清空表单校验
     formRef.value?.resetFields()
     // 关闭对话框
     dialogVisible.value = false
-    done()
 }
 
 const form = reactive({
@@ -144,5 +158,9 @@ const submitForm = async (formEl) => {
 .sign-up-form {
     width: 400px;
     margin: auto;
+}
+
+.el-form-item~.el-form-item {
+    margin-top: 35px;
 }
 </style>
