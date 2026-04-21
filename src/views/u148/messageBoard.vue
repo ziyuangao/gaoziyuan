@@ -25,17 +25,17 @@
 
         <!-- 留言列表 -->
         <div class="message-list">
-            <el-card v-for="msg in messageList" :key="msg.id" class="message-card" shadow="hover">
+            <el-card v-for="msg in messageList" :key="msg._id" class="message-card" shadow="hover">
                 <template #header>
                     <div class="card-header">
                         <span class="nickname">{{ msg.nickname }}</span>
-                        <span class="time">{{ msg.time }}</span>
-                        <el-button type="danger" size="small" link @click="deleteMessage(msg.id)" class="delete-btn">
+                        <span class="time">{{ msg.timestamp }}</span>
+                        <el-button type="danger" size="small" link @click="deleteMessage(msg._id)" class="delete-btn">
                             删除
                         </el-button>
                     </div>
                 </template>
-                <div class="content">{{ msg.content }}</div>
+                <div class="content">{{ msg.message }}</div>
             </el-card>
         </div>
 
@@ -54,59 +54,12 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { addmsg, getmsglist } from '@/api/request'
+import { ElMessage } from 'element-plus'
+import { useUserStore } from '@/stores/userStore'
 
+const userStore = useUserStore()
 const route = useRouter();
-// 模拟后端返回的数据结构
-const mockData = {
-    pageSize: 10,
-    pageCount: 3,
-    total: 25,
-    list: [
-        { id: 1, nickname: "A***B", time: "2026-04-16 14:30", content: "这是一条留言内容，欢迎留言！", isDelete: 2 },
-        { id: 2, nickname: "C***D", time: "2026-04-16 13:15", content: "Vue3 + Element Plus 真好用！", isDelete: 2 },
-        { id: 3, nickname: "E***F", time: "2026-04-16 12:00", content: "半匿名昵称效果不错", isDelete: 2 },
-        { id: 4, nickname: "G***H", time: "2026-04-16 10:45", content: "分页组件简洁明了", isDelete: 2 },
-        { id: 5, nickname: "I***J", time: "2026-04-15 22:10", content: "管理员可以删除留言", isDelete: 2 },
-        { id: 6, nickname: "K***L", time: "2026-04-15 19:30", content: "字数限制200字，避免刷屏", isDelete: 2 },
-        { id: 7, nickname: "M***N", time: "2026-04-15 16:20", content: "支持清空输入框", isDelete: 2 },
-        { id: 8, nickname: "O***P", time: "2026-04-15 14:00", content: "留言卡片设计清晰", isDelete: 2 },
-        { id: 9, nickname: "Q***R", time: "2026-04-15 11:15", content: "分页上一页下一页逻辑正常", isDelete: 2 },
-        { id: 10, nickname: "S***T", time: "2026-04-15 09:45", content: "期待后端接口对接", isDelete: 2 },
-    ]
-}
-
-// 第二页数据（模拟）
-const mockDataPage2 = {
-    pageSize: 10,
-    pageCount: 3,
-    total: 25,
-    list: [
-        { id: 11, nickname: "U***V", time: "2026-04-14 20:30", content: "留言板第二页内容示例1", isDelete: 2 },
-        { id: 12, nickname: "W***X", time: "2026-04-14 18:15", content: "留言板第二页内容示例2", isDelete: 2 },
-        { id: 13, nickname: "Y***Z", time: "2026-04-14 15:00", content: "留言板第二页内容示例3", isDelete: 2 },
-        { id: 14, nickname: "A***C", time: "2026-04-14 12:30", content: "留言板第二页内容示例4", isDelete: 2 },
-        { id: 15, nickname: "D***F", time: "2026-04-14 10:10", content: "留言板第二页内容示例5", isDelete: 2 },
-        { id: 16, nickname: "G***I", time: "2026-04-13 22:00", content: "留言板第二页内容示例6", isDelete: 2 },
-        { id: 17, nickname: "J***L", time: "2026-04-13 19:45", content: "留言板第二页内容示例7", isDelete: 2 },
-        { id: 18, nickname: "M***O", time: "2026-04-13 16:30", content: "留言板第二页内容示例8", isDelete: 2 },
-        { id: 19, nickname: "P***R", time: "2026-04-13 14:00", content: "留言板第二页内容示例9", isDelete: 2 },
-        { id: 20, nickname: "S***U", time: "2026-04-13 11:20", content: "留言板第二页内容示例10", isDelete: 2 },
-    ]
-}
-
-// 第三页数据（模拟）
-const mockDataPage3 = {
-    pageSize: 10,
-    pageCount: 3,
-    total: 25,
-    list: [
-        { id: 21, nickname: "V***X", time: "2026-04-12 21:30", content: "留言板第三页内容示例1", isDelete: 2 },
-        { id: 22, nickname: "Y***A", time: "2026-04-12 18:15", content: "留言板第三页内容示例2", isDelete: 2 },
-        { id: 23, nickname: "B***D", time: "2026-04-12 15:00", content: "留言板第三页内容示例3", isDelete: 2 },
-        { id: 24, nickname: "E***G", time: "2026-04-12 12:30", content: "留言板第三页内容示例4", isDelete: 2 },
-        { id: 25, nickname: "H***J", time: "2026-04-12 10:10", content: "留言板第三页内容示例5", isDelete: 2 },
-    ]
-}
 
 // 当前页数据
 const currentPage = ref(1)
@@ -131,26 +84,30 @@ const handleInputBlur = () => {
 }
 
 // 根据页码获取数据（模拟接口请求）
-const fetchMessages = (page) => {
-    // 模拟异步请求
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            let data
-            if (page === 1) {
-                data = JSON.parse(JSON.stringify(mockData))
-            } else if (page === 2) {
-                data = JSON.parse(JSON.stringify(mockDataPage2))
-            } else {
-                data = JSON.parse(JSON.stringify(mockDataPage3))
-            }
-            resolve(data)
-        }, 300)
-    })
+const fetchMessages = async (page = 1) => {
+    try {
+        // 不传递参数就是从第一页加载，否则加载具体页码内容
+        const reqResult = await getmsglist({ pageCount: page, pageSize: 10 });
+        if (reqResult.success) {
+            return reqResult.data;
+        } else {
+            ElMessage.error(reqResult.message)
+            return {}
+        }
+    } catch (error) {
+        console.log(error, 'error')
+        return {}
+    }
+
 }
 
 // 加载当前页数据
 const loadMessages = async () => {
     const data = await fetchMessages(currentPage.value)
+    // 未获取数据
+    if (!data.list) {
+        return
+    }
     messageList.value = data.list
     total.value = data.total
     pageCount.value = data.pageCount
@@ -186,41 +143,33 @@ const nextPage = () => {
 }
 
 // 提交留言
-const submitMessage = () => {
+const submitMessage = async () => {
     if (!newMessage.value.trim()) return
 
-    // 模拟提交新留言
-    const newId = Date.now()
-    const now = new Date()
-    const timeStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`
-
-    // 临时昵称（实际应该从登录用户获取）
-    const tempNickname = "访***客"
-
     const newMsg = {
-        id: newId,
-        nickname: tempNickname,
-        time: timeStr,
-        content: newMessage.value,
-        isDelete: 2
+        userId: userStore.USER_INFO.userId,
+        nickname: userStore.USER_INFO.email,
+        message: newMessage.value,
     }
+    try {
+        const reqResult = await addmsg(newMsg)
+        console.log(reqResult, 'reqResult')
+        // 留言成功
+        if (reqResult.success) {
+            ElMessage.success(reqResult.message)
+            // 清空输入框
+            newMessage.value = ''
+            // 重新加载数据
+            loadMessages()
+        } else {
+            // 留言失败
+            ElMessage.error(reqResult.message)
+        }
 
-    // 添加到当前列表最前面（最新留言在上）
-    messageList.value.unshift(newMsg)
-    total.value++
-
-    // 如果当前页超出限制，简单处理：保持在第一页
-    if (messageList.value.length > 10) {
-        // 简单模拟分页调整：重新加载第一页数据
-        currentPage.value = 1
-        loadMessages()
+    } catch (error) {
+        console.log(error, 'error')
     }
-
-    // 清空输入框
-    newMessage.value = ''
-
-    // 提示成功（Element Plus 需要额外引入，这里用 alert 简化）
-    alert('留言提交成功！')
+    return
 }
 
 

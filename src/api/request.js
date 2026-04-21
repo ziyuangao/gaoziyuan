@@ -14,3 +14,21 @@ export const talkToDeepseek = (params) => api.post('/.netlify/functions/deepseek
 export const registerUser = (params) => api.post('/.netlify/functions/signup', params)
 // 登录接口
 export const loginUser = (params) => api.post('/.netlify/functions/login', params)
+// 新增留言接口
+export const addmsg = (params) =>
+  api.post('/.netlify/functions/addmsg', params, {
+    headers: {
+      user_token: sessionStorage.getItem('user_token') || '',
+      token: `${new Date().getTime()}+gaoziyuan`
+    }
+  })
+// 获取留言接口
+export const getmsglist = (params) => api.get('/.netlify/functions/getmsglist', params)
+// 删除留言接口
+export const deletemsg = (params) =>
+  api.post('/.netlify/functions/deletemsg', params, {
+    headers: {
+      user_token: sessionStorage.getItem('user_token') || '',
+      token: `${new Date().getTime()}+gaoziyuan`
+    }
+  })

@@ -164,7 +164,7 @@ const handleSubmit = async () => {
         if (loginResult.success && loginResult.data) {
             loginSuccess.value = true
             // 会话存储保存token请求留言板接口需要使用
-            sessionStorage.setItem('token', loginResult.data.token)
+            sessionStorage.setItem('user_token', loginResult.data.user_token)
             // 保存用户名 提交留言板接口需要使用
             userStore.SETUSERINFO(loginResult.data.user)
             ElMessage.success({
