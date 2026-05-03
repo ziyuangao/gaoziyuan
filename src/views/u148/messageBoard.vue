@@ -11,8 +11,8 @@
             <el-input v-model="newMessage" type="textarea" :rows="4" maxlength="200" show-word-limit
                 placeholder="说点什么吧...（最多200字）" @blur="handleInputBlur" clearabled />
             <div class="input-actions">
-                <el-button type="primary" @click="submitMessage" :disabled="!newMessage.trim()">
-                    提交
+                <el-button type="primary" @click="submitMessage" :disabled="!newMessage.trim() || submitLoading">
+                    {{ submitLoading ? '提交中...' : '提交' }}
                 </el-button>
             </div>
         </div>
@@ -24,7 +24,7 @@
         </div>
 
         <!-- 留言列表 -->
-        <div class="message-list">
+        <div v-loading="listLoading" class="message-list">
             <el-card v-for="msg in messageList" :key="msg._id" class="message-card" shadow="hover">
                 <template #header>
                     <div class="card-header">
@@ -41,10 +41,10 @@
 
         <!-- 分页控件 -->
         <div class="pagination-wrapper">
-            <el-button @click="prevPage" :disabled="currentPage <= 1">
+            <el-button @click="prevPage" :disabled="currentPage <= 1 || listLoading">
                 上一页
             </el-button>
-            <el-button @click="nextPage" :disabled="currentPage >= pageCount">
+            <el-button @click="nextPage" :disabled="currentPage >= pageCount || listLoading">
                 下一页
             </el-button>
         </div>
@@ -55,7 +55,7 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { addmsg, getmsglist } from '@/api/request'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElLoading } from 'element-plus'
 import { useUserStore } from '@/stores/userStore'
 
 const userStore = useUserStore()
@@ -69,6 +69,10 @@ const pageCount = ref(0)
 
 // 新留言内容
 const newMessage = ref('')
+
+// Loading 状态
+const submitLoading = ref(false)  // 提交留言的loading
+const listLoading = ref(false)    // 获取留言列表的loading
 
 const handleInputBlur = () => {
     // 当前用户是否登录
@@ -103,14 +107,25 @@ const fetchMessages = async (page = 1) => {
 
 // 加载当前页数据
 const loadMessages = async () => {
-    const data = await fetchMessages(currentPage.value)
-    // 未获取数据
-    if (!data.list) {
-        return
+    // 开始加载数据
+    listLoading.value = true
+
+    try {
+        const data = await fetchMessages(currentPage.value)
+        // 未获取数据
+        if (!data.list) {
+            return
+        }
+        messageList.value = data.list
+        total.value = data.total
+        pageCount.value = data.pageCount
+    } catch (error) {
+        console.error('加载留言失败:', error)
+        ElMessage.error('加载留言失败')
+    } finally {
+        // 无论成功还是失败，都关闭loading
+        listLoading.value = false
     }
-    messageList.value = data.list
-    total.value = data.total
-    pageCount.value = data.pageCount
 }
 
 // 加载留言区信息
@@ -124,7 +139,7 @@ const checkedPendingMessage = () => {
 
 // 上一页
 const prevPage = () => {
-    if (currentPage.value > 1) {
+    if (currentPage.value > 1 && !listLoading.value) {
         currentPage.value--
         loadMessages()
         // 滚动到顶部
@@ -134,7 +149,7 @@ const prevPage = () => {
 
 // 下一页
 const nextPage = () => {
-    if (currentPage.value < pageCount.value) {
+    if (currentPage.value < pageCount.value && !listLoading.value) {
         currentPage.value++
         loadMessages()
         // 滚动到顶部
@@ -146,11 +161,15 @@ const nextPage = () => {
 const submitMessage = async () => {
     if (!newMessage.value.trim()) return
 
+    // 开始提交，显示loading
+    submitLoading.value = true
+
     const newMsg = {
         userId: userStore.USER_INFO.userId,
         nickname: userStore.USER_INFO.email,
         message: newMessage.value,
     }
+
     try {
         const reqResult = await addmsg(newMsg)
         console.log(reqResult, 'reqResult')
@@ -160,34 +179,51 @@ const submitMessage = async () => {
             // 清空输入框
             newMessage.value = ''
             // 重新加载数据
-            loadMessages()
+            await loadMessages()
         } else {
             // 留言失败
             ElMessage.error(reqResult.message)
         }
-
     } catch (error) {
         console.log(error, 'error')
+        ElMessage.error('提交失败，请稍后重试')
+    } finally {
+        // 无论成功还是失败，都关闭loading
+        submitLoading.value = false
     }
-    return
 }
 
 
 // 删除留言
-const deleteMessage = (id) => {
-    // 模拟删除
-    const index = messageList.value.findIndex(msg => msg.id === id)
-    if (index !== -1) {
-        messageList.value.splice(index, 1)
-        total.value--
+const deleteMessage = async (id) => {
+    // 这里应该调用删除接口，目前是模拟删除
+    try {
+        // TODO: 调用删除接口
+        // const reqResult = await deletemsg(id)
+        // if (reqResult.success) {
+        //     ElMessage.success('删除成功')
+        //     await loadMessages()
+        // } else {
+        //     ElMessage.error(reqResult.message)
+        // }
 
-        // 如果当前页没有数据且不是第一页，回到上一页
-        if (messageList.value.length === 0 && currentPage.value > 1) {
-            currentPage.value--
-            loadMessages()
+        // 模拟删除
+        const index = messageList.value.findIndex(msg => msg._id === id)
+        if (index !== -1) {
+            messageList.value.splice(index, 1)
+            total.value--
+
+            // 如果当前页没有数据且不是第一页，回到上一页
+            if (messageList.value.length === 0 && currentPage.value > 1) {
+                currentPage.value--
+                await loadMessages()
+            }
+
+            ElMessage.success('留言已删除')
         }
-
-        alert('留言已删除')
+    } catch (error) {
+        console.error('删除失败:', error)
+        ElMessage.error('删除失败')
     }
 }
 
@@ -249,6 +285,7 @@ onMounted(() => {
 
 .message-list {
     margin-bottom: 20px;
+    min-height: 300px;
 }
 
 .message-card {

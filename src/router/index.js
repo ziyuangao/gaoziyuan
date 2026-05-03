@@ -189,7 +189,19 @@ const quickLinksRoutes = [
   }
 ]
 
-routes = [...topRoutes, ...toolsRoutes, ...u148Routes, ...quickLinksRoutes]
+// 梦幻西游游戏攻略路由
+const mhxyRoutes = [
+  {
+    path: '/mhxy/cxdg',
+    name: 'mhxycxdg',
+    meta: {
+      title: '梦幻西游慈心渡鬼'
+    },
+    component: () => import('../views/mhxy/cxdg.vue')
+  }
+]
+
+routes = [...topRoutes, ...toolsRoutes, ...u148Routes, ...quickLinksRoutes, ...mhxyRoutes]
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes

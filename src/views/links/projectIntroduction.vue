@@ -371,6 +371,7 @@ const projectTreeText = computed(() => {
         '│  ├─ dataPool/',
         '│  │  ├─ daily.json                # 日记/文本数据示例',
         '│  │  └─ plans/no1.json            # 21 天计划数据',
+        '│  │  └─ cxdg.json                 # 梦幻西游慈心渡鬼',
         '│  └─ assets/                      # 全局样式与资源',
         '└─ vite.config.js                  # Vite 配置（base、alias、构建输出到 docs）',
     ].join('\n')
