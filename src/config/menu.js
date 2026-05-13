@@ -37,6 +37,7 @@ const quickLinksList = [
 
 const mhxyMenu = [
   { id: 1, text: '慈心渡鬼', path: '/mhxy/cxdg' },
-  { id: 2, text: '物价表', path: '/mhxy/table' }
+  { id: 2, text: '物价表', path: '/mhxy/table' },
+  { id: 3, text: '宝石计算器', path: '/mhxy/gem' }
 ]
 export { homeMenuList, noteMenuList, u148MenuList, toolsMenuList, quickLinksList, mhxyMenu }

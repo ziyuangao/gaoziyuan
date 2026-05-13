@@ -214,6 +214,14 @@ const mhxyRoutes = [
       title: '梦幻西游物价表'
     },
     component: () => import('../views/mhxy/table.vue')
+  },
+  {
+    path: '/mhxy/gem',
+    name: 'mhxyGem',
+    meta: {
+      title: '梦幻西游宝石计算器'
+    },
+    component: () => import('../views/mhxy/gem.vue')
   }
 ]
 
