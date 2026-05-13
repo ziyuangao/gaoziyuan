@@ -32,3 +32,9 @@ export const deletemsg = (params) =>
       token: `${new Date().getTime()}+gaoziyuan`
     }
   })
+
+export const getMHXYPrice = () => {
+  return api.get('https://mhapi.zyungame.com/mh/server/prices', {
+    serverName: '一生一世'
+  })
+}

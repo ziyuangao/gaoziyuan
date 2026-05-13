@@ -35,4 +35,8 @@ const quickLinksList = [
   { id: 6, text: '小程序介绍', path: '/links/miniProgramIntroduction' }
 ]
 
-export { homeMenuList, noteMenuList, u148MenuList, toolsMenuList, quickLinksList }
+const mhxyMenu = [
+  { id: 1, text: '慈心渡鬼', path: '/mhxy/cxdg' },
+  { id: 2, text: '物价表', path: '/mhxy/table' }
+]
+export { homeMenuList, noteMenuList, u148MenuList, toolsMenuList, quickLinksList, mhxyMenu }

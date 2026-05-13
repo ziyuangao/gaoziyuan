@@ -192,12 +192,28 @@ const quickLinksRoutes = [
 // 梦幻西游游戏攻略路由
 const mhxyRoutes = [
   {
+    path: '/mhxy/index',
+    name: 'mhxyIndex',
+    meta: {
+      title: '梦幻西游导航页'
+    },
+    component: () => import('../views/mhxy/index.vue')
+  },
+  {
     path: '/mhxy/cxdg',
     name: 'mhxycxdg',
     meta: {
       title: '梦幻西游慈心渡鬼'
     },
     component: () => import('../views/mhxy/cxdg.vue')
+  },
+  {
+    path: '/mhxy/table',
+    name: 'mhxyTable',
+    meta: {
+      title: '梦幻西游物价表'
+    },
+    component: () => import('../views/mhxy/table.vue')
   }
 ]
 
