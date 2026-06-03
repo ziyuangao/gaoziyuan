@@ -3,7 +3,7 @@
         <!-- 顶部栏 -->
         <div class="header">
             <div class="logo">💬 留言板</div>
-            <el-button type="primary" @click="handleLogin">登录</el-button>
+            <el-button v-if="!user_token" type="primary" @click="handleLogin">登录</el-button>
         </div>
 
         <!-- 留言输入区 -->
@@ -30,7 +30,8 @@
                     <div class="card-header">
                         <span class="nickname">{{ msg.nickname }}</span>
                         <span class="time">{{ msg.timestamp }}</span>
-                        <el-button type="danger" size="small" link @click="deleteMessage(msg._id)" class="delete-btn">
+                        <el-button v-if="canShowDeleteBtn" type="danger" size="small" link
+                            @click="deleteMessage(msg._id)" :disabled="listLoading || submitLoading" class="delete-btn">
                             删除
                         </el-button>
                     </div>
@@ -52,23 +53,30 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { addmsg, getmsglist } from '@/api/request'
-import { ElMessage, ElLoading } from 'element-plus'
+import { addmsg, getmsglist, deletemsg } from '@/api/request'
+import { ElMessage, ElLoading, ElMessageBox } from 'element-plus'
 import { useUserStore } from '@/stores/userStore'
 
 const userStore = useUserStore()
 const route = useRouter();
+const ADMIN_EMAIL = 'ziyuan_gao@163.com'
 
 // 当前页数据
 const currentPage = ref(1)
 const messageList = ref([])
 const total = ref(0)
 const pageCount = ref(0)
+let user_token = sessionStorage.getItem('user_token') || ''
 
 // 新留言内容
 const newMessage = ref('')
+
+const canShowDeleteBtn = computed(() => {
+    const email = (userStore.USER_INFO?.email || '').trim().toLowerCase()
+    return email === ADMIN_EMAIL
+})
 
 // Loading 状态
 const submitLoading = ref(false)  // 提交留言的loading
@@ -196,34 +204,41 @@ const submitMessage = async () => {
 
 // 删除留言
 const deleteMessage = async (id) => {
-    // 这里应该调用删除接口，目前是模拟删除
     try {
-        // TODO: 调用删除接口
-        // const reqResult = await deletemsg(id)
-        // if (reqResult.success) {
-        //     ElMessage.success('删除成功')
-        //     await loadMessages()
-        // } else {
-        //     ElMessage.error(reqResult.message)
-        // }
+        await ElMessageBox.confirm('确认删除这条留言吗？删除后将无法在留言板中看到。', '删除确认', {
+            confirmButtonText: '确认删除',
+            cancelButtonText: '取消',
+            type: 'warning'
+        })
+    } catch {
+        return
+    }
 
-        // 模拟删除
-        const index = messageList.value.findIndex(msg => msg._id === id)
-        if (index !== -1) {
-            messageList.value.splice(index, 1)
-            total.value--
+    const loadingInstance = ElLoading.service({
+        lock: true,
+        text: '删除中...',
+        background: 'rgba(255, 255, 255, 0.7)'
+    })
 
-            // 如果当前页没有数据且不是第一页，回到上一页
-            if (messageList.value.length === 0 && currentPage.value > 1) {
+    try {
+        const reqResult = await deletemsg({ id })
+
+        if (reqResult.success) {
+            if (messageList.value.length === 1 && currentPage.value > 1) {
                 currentPage.value--
-                await loadMessages()
             }
 
-            ElMessage.success('留言已删除')
+            ElMessage.success(reqResult.message || '删除成功')
+            await loadMessages()
+        } else {
+            ElMessage.error(reqResult.message || '删除失败')
         }
     } catch (error) {
         console.error('删除失败:', error)
-        ElMessage.error('删除失败')
+        const errMsg = error?.response?.data?.message || '删除失败，请稍后重试'
+        ElMessage.error(errMsg)
+    } finally {
+        loadingInstance.close()
     }
 }
 

@@ -118,21 +118,6 @@
                                         这会导致 Key 被轻易抓包/反编译获取，存在额度盗用与封禁风险。
                                     </div>
                                 </el-timeline-item>
-                                <el-timeline-item timestamp="中" placement="top">
-                                    <div class="timelineTitle">音频实例生命周期不稳（白噪音）</div>
-                                    <div class="timelineDesc">
-                                        <span class="mono">pages/sleep/index.js</span> 在 <span
-                                            class="mono">onHide</span> 就
-                                        <span class="mono">destroy()</span>，用户切后台再回来可能无法继续播放；同时全局创建单例也会影响多页面资源管理。
-                                    </div>
-                                </el-timeline-item>
-                                <el-timeline-item timestamp="低" placement="top">
-                                    <div class="timelineTitle">请求封装缺失，重复代码多</div>
-                                    <div class="timelineDesc">
-                                        多处 <span class="mono">wx.request</span> 手写超时、错误 toast、字段判空等逻辑；可抽成
-                                        <span class="mono">utils/request.js</span>（统一超时、错误结构、loading）。
-                                    </div>
-                                </el-timeline-item>
                             </el-timeline>
                         </div>
                     </div>
