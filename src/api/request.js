@@ -18,8 +18,7 @@ export const loginUser = (params) => api.post('/.netlify/functions/login', param
 export const addmsg = (params) =>
   api.post('/.netlify/functions/addmsg', params, {
     headers: {
-      user_token: sessionStorage.getItem('user_token') || '',
-      token: `${new Date().getTime()}+gaoziyuan`
+      user_token: sessionStorage.getItem('user_token') || ''
     }
   })
 // 获取留言接口
@@ -28,8 +27,7 @@ export const getmsglist = (params) => api.get('/.netlify/functions/getmsglist', 
 export const deletemsg = (params) =>
   api.post('/.netlify/functions/deletemsg', params, {
     headers: {
-      user_token: sessionStorage.getItem('user_token') || '',
-      token: `${new Date().getTime()}+gaoziyuan`
+      user_token: sessionStorage.getItem('user_token') || ''
     }
   })
 

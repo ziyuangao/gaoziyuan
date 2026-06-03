@@ -53,9 +53,6 @@ const createAPI = (baseURL = getBaseURL(), defaultOptions = {}) => {
       return request(url, {
         method: 'GET',
         params,
-        headers: {
-          token: `${new Date().getTime()}+gaoziyuan`
-        },
         ...options
       })
     },
@@ -65,9 +62,6 @@ const createAPI = (baseURL = getBaseURL(), defaultOptions = {}) => {
       return request(url, {
         method: 'POST',
         data,
-        headers: {
-          token: `${new Date().getTime()}+gaoziyuan`
-        },
         ...options
       })
     },
