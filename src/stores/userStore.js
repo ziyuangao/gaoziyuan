@@ -9,11 +9,6 @@ export const useUserStore = defineStore('user', {
     USER_INFO: {}
   }),
 
-  // 计算属性
-  getters: {
-    doubleCounter: (state) => state.counter * 2
-  },
-
   // 方法/动作
   actions: {
     SETUSERINFO(info) {
@@ -27,21 +22,6 @@ export const useUserStore = defineStore('user', {
     },
     SETDEEPSEEKKEY(key) {
       this.DEEPSEEK_ENCKEY = key
-    },
-    // 切换主题
-    toggleTheme() {
-      this.theme = this.theme === 'light' ? 'dark' : 'light'
-    },
-
-    // 计数器方法
-    increment() {
-      this.counter++
-    },
-    decrement() {
-      this.counter--
-    },
-    resetCounter() {
-      this.counter = 0
     }
   }
 })

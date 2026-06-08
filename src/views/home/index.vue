@@ -27,7 +27,7 @@ onMounted(()=>{
       userStore.SETGAODEKEY(res.data)
     })
     getMyKey({type:'gaodeenc'}).then(res=>{
-      userStore.SETGAODEKEY(res.data)
+      userStore.SETGAODEENCKEY(res.data)
     })
   }
 })

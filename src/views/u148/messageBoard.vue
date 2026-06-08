@@ -3,7 +3,7 @@
         <!-- 顶部栏 -->
         <div class="header">
             <div class="logo">💬 留言板</div>
-            <el-button v-if="!user_token" type="primary" @click="handleLogin">登录</el-button>
+            <el-button v-if="!isLoggedIn" type="primary" @click="handleLogin">登录</el-button>
         </div>
 
         <!-- 留言输入区 -->
@@ -68,10 +68,14 @@ const currentPage = ref(1)
 const messageList = ref([])
 const total = ref(0)
 const pageCount = ref(0)
-let user_token = sessionStorage.getItem('user_token') || ''
+const userToken = ref('')
 
 // 新留言内容
 const newMessage = ref('')
+
+const isLoggedIn = computed(() => {
+    return !!(userStore.USER_INFO?.email || userToken.value)
+})
 
 const canShowDeleteBtn = computed(() => {
     const email = (userStore.USER_INFO?.email || '').trim().toLowerCase()
@@ -82,9 +86,13 @@ const canShowDeleteBtn = computed(() => {
 const submitLoading = ref(false)  // 提交留言的loading
 const listLoading = ref(false)    // 获取留言列表的loading
 
+const syncUserToken = () => {
+    userToken.value = sessionStorage.getItem('user_token') || ''
+}
+
 const handleInputBlur = () => {
     // 当前用户是否登录
-    const isLogin = sessionStorage.getItem('token') ? true : false
+    const isLogin = sessionStorage.getItem('user_token') ? true : false
     if (!isLogin) {
         // 未登录时 需要在sessionStorage中保存用户输入的留言内容，以便登录后可以继续发布
         if (newMessage.value.trim() === '') {
@@ -99,7 +107,7 @@ const handleInputBlur = () => {
 const fetchMessages = async (page = 1) => {
     try {
         // 不传递参数就是从第一页加载，否则加载具体页码内容
-        const reqResult = await getmsglist({ pageCount: page, pageSize: 10 });
+        const reqResult = await getmsglist({ currentPage: page, pageSize: 10 });
         if (reqResult.success) {
             return reqResult.data;
         } else {
@@ -249,8 +257,10 @@ const handleLogin = () => {
 
 // 初始化加载数据
 onMounted(() => {
+    syncUserToken()
     loadMessages()
     checkedPendingMessage()
+    window.addEventListener('focus', syncUserToken)
 })
 </script>
 

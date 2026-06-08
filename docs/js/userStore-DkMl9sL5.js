@@ -1,0 +1,1 @@
+import{e as s}from"./index-CISxvNUc.js";const K=s("user",{state:()=>({GAODE_KEY:"",GAODE_ENCKEY:"",DEEPSEEK_ENCKEY:"",USER_INFO:{}}),actions:{SETUSERINFO(E){this.USER_INFO=E},SETGAODEKEY(E){this.GAODE_KEY=E},SETGAODEENCKEY(E){this.GAODE_ENCKEY=E},SETDEEPSEEKKEY(E){this.DEEPSEEK_ENCKEY=E}}});export{K as u};
