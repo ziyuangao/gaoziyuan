@@ -9,7 +9,7 @@
         <!-- 留言输入区 -->
         <div class="input-area">
             <el-input v-model="newMessage" type="textarea" :rows="4" maxlength="200" show-word-limit
-                placeholder="说点什么吧...（最多200字）" @blur="handleInputBlur" clearabled />
+                placeholder="说点什么吧...（最多200字）" @blur="handleInputBlur" clearable />
             <div class="input-actions">
                 <el-button type="primary" @click="submitMessage" :disabled="!newMessage.trim() || submitLoading">
                     {{ submitLoading ? '提交中...' : '提交' }}
@@ -74,7 +74,7 @@ const userToken = ref('')
 const newMessage = ref('')
 
 const isLoggedIn = computed(() => {
-    return !!(userStore.USER_INFO?.email || userToken.value)
+    return !!userToken.value
 })
 
 const canShowDeleteBtn = computed(() => {
@@ -177,12 +177,17 @@ const nextPage = () => {
 const submitMessage = async () => {
     if (!newMessage.value.trim()) return
 
+    syncUserToken()
+    if (!userToken.value) {
+        ElMessage.warning('请先登录')
+        handleLogin()
+        return
+    }
+
     // 开始提交，显示loading
     submitLoading.value = true
 
     const newMsg = {
-        userId: userStore.USER_INFO.userId,
-        nickname: userStore.USER_INFO.email,
         message: newMessage.value,
     }
 

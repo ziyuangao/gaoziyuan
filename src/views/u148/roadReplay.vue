@@ -1,7 +1,8 @@
 <template>
   <div class="page">
-    <RoadReplay 
-      :points="points" 
+    <RoadReplay
+      v-if="isReady"
+      :points="points"
       :api-key="apiKey"
       :security-js-code="encKey"
     />
@@ -9,12 +10,34 @@
 </template>
 
 <script setup>
+import { computed, onMounted } from 'vue';
 import RoadReplay from './components/TrackPlayback.vue';
+import { getMyKey } from '@/api/request';
 import { useUserStore } from '@/stores/userStore'
 const userStore = useUserStore()
 
-const apiKey = userStore.GAODE_KEY;
-const encKey = userStore.GAODE_ENCKEY;
+const apiKey = computed(() => userStore.GAODE_KEY);
+const encKey = computed(() => userStore.GAODE_ENCKEY);
+const isReady = computed(() => !!(apiKey.value && encKey.value));
+
+onMounted(() => {
+  if (isReady.value) {
+    return
+  }
+
+  if (!apiKey.value) {
+    getMyKey({ type: 'gaode' }).then(res => {
+      userStore.SETGAODEKEY(res.data)
+    })
+  }
+
+  if (!encKey.value) {
+    getMyKey({ type: 'gaodeenc' }).then(res => {
+      userStore.SETGAODEENCKEY(res.data)
+    })
+  }
+})
+
 const points = [
   {
     name: '南阳·车站北路和谐小区',
